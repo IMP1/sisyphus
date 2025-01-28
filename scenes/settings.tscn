@@ -1,0 +1,213 @@
+[gd_scene load_steps=7 format=3 uid="uid://to5tsudmmt6s"]
+
+[ext_resource type="StyleBox" uid="uid://dlg6i1mgpiwsh" path="res://resources/ui_panel.tres" id="1_6veu8"]
+[ext_resource type="Theme" uid="uid://b6h2wm00ubtmo" path="res://resources/theme_upgrade_shop.tres" id="1_cmti5"]
+[ext_resource type="Script" path="res://scenes/settings.gd" id="2_6kdqp"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_uutnq"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yiyx0"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hrr3x"]
+
+[node name="Settings" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_cmti5")
+script = ExtResource("2_6kdqp")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("1_6veu8")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "Settings"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 48
+
+[node name="VSeparator" type="VSeparator" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxEmpty_uutnq")
+
+[node name="General" type="VBoxContainer" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer/General"]
+layout_mode = 2
+text = "General"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="PanelContainer/VBoxContainer/HBoxContainer/General"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxEmpty_yiyx0")
+
+[node name="Language" type="HBoxContainer" parent="PanelContainer/VBoxContainer/HBoxContainer/General"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer/General/Language"]
+layout_mode = 2
+size_flags_stretch_ratio = 0.5
+text = "Language"
+
+[node name="OptionButton" type="OptionButton" parent="PanelContainer/VBoxContainer/HBoxContainer/General/Language"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+selected = 0
+
+[node name="VSeparator2" type="VSeparator" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.5
+theme_override_styles/separator = SubResource("StyleBoxEmpty_hrr3x")
+
+[node name="Audio" type="VBoxContainer" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer/Audio"]
+layout_mode = 2
+text = "Audio Volume"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="PanelContainer/VBoxContainer/HBoxContainer/Audio"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxEmpty_yiyx0")
+
+[node name="MasterVolume" type="HBoxContainer" parent="PanelContainer/VBoxContainer/HBoxContainer/Audio"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer/Audio/MasterVolume"]
+custom_minimum_size = Vector2(96, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.6
+text = "Master"
+
+[node name="HSlider" type="HSlider" parent="PanelContainer/VBoxContainer/HBoxContainer/Audio/MasterVolume"]
+layout_mode = 2
+size_flags_horizontal = 3
+value = 100.0
+
+[node name="MusicVolume" type="HBoxContainer" parent="PanelContainer/VBoxContainer/HBoxContainer/Audio"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer/Audio/MusicVolume"]
+custom_minimum_size = Vector2(96, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.6
+text = "Music"
+
+[node name="HSlider" type="HSlider" parent="PanelContainer/VBoxContainer/HBoxContainer/Audio/MusicVolume"]
+layout_mode = 2
+size_flags_horizontal = 3
+value = 100.0
+
+[node name="SoundsVolume" type="HBoxContainer" parent="PanelContainer/VBoxContainer/HBoxContainer/Audio"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer/Audio/SoundsVolume"]
+custom_minimum_size = Vector2(96, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.6
+text = "Sound Effects"
+
+[node name="HSlider" type="HSlider" parent="PanelContainer/VBoxContainer/HBoxContainer/Audio/SoundsVolume"]
+layout_mode = 2
+size_flags_horizontal = 3
+value = 100.0
+
+[node name="VSeparator3" type="VSeparator" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.5
+theme_override_styles/separator = SubResource("StyleBoxEmpty_uutnq")
+
+[node name="Controls" type="VBoxContainer" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer/Controls"]
+layout_mode = 2
+text = "Controls"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="PanelContainer/VBoxContainer/HBoxContainer/Controls"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxEmpty_yiyx0")
+
+[node name="MoveLeft" type="HBoxContainer" parent="PanelContainer/VBoxContainer/HBoxContainer/Controls"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer/Controls/MoveLeft"]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.6
+text = "Move Left"
+
+[node name="Button" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer/Controls/MoveLeft"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MoveRight" type="HBoxContainer" parent="PanelContainer/VBoxContainer/HBoxContainer/Controls"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer/Controls/MoveRight"]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.6
+text = "Move Right"
+
+[node name="Button" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer/Controls/MoveRight"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Menu" type="HBoxContainer" parent="PanelContainer/VBoxContainer/HBoxContainer/Controls"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer/Controls/Menu"]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.6
+text = "Open Pause Menu"
+
+[node name="Button" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer/Controls/Menu"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VSeparator4" type="VSeparator" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxEmpty_uutnq")
+
+[node name="Close" type="Button" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_default_cursor_shape = 2
+text = "Close"

@@ -1,0 +1,98 @@
+[gd_scene load_steps=6 format=3 uid="uid://de0o8rcvv3bp4"]
+
+[ext_resource type="Script" path="res://objects/boulder.gd" id="1_lxnkh"]
+[ext_resource type="FontFile" uid="uid://c82waaftc041a" path="res://assets/Caesar_Dressing/CaesarDressing-Regular.ttf" id="2_fjf5w"]
+[ext_resource type="AudioStream" uid="uid://67vlyxxj2im8" path="res://assets/audio/brown_noise.ogg" id="2_u5vup"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7uehl"]
+radius = 12.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_onprg"]
+size = Vector2(30, 46)
+
+[node name="Boulder" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 7
+script = ExtResource("1_lxnkh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -12)
+shape = SubResource("CircleShape2D_7uehl")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+position = Vector2(0, -12)
+color = Color(0.933333, 0.764706, 0.603922, 1)
+polygon = PackedVector2Array(-1, -12, -4, -11, -8, -9, -10, -6, -12, -2, -12, 4, -9, 8, -6, 10, 1, 11, 8, 11, 10, 7, 12, 1, 12, -4, 9, -9, 5, -11, 1, -12)
+
+[node name="ResetArea" type="Area2D" parent="."]
+position = Vector2(-35, -23)
+collision_layer = 0
+collision_mask = 2
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ResetArea"]
+position = Vector2(-2, 0)
+shape = SubResource("RectangleShape2D_onprg")
+
+[node name="ScrapeSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_u5vup")
+volume_db = -10.0
+bus = &"DiegeticSounds"
+parameters/looping = true
+
+[node name="SlopeRay" type="RayCast2D" parent="."]
+position = Vector2(0, -3)
+target_position = Vector2(10, 0)
+hit_from_inside = true
+
+[node name="Debug" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="States" type="VBoxContainer" parent="Debug"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -159.0
+offset_top = -79.0
+offset_right = -32.0
+offset_bottom = -29.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="OnSlope" type="Label" parent="Debug/States"]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.133333, 0.12549, 0.203922, 1)
+theme_override_fonts/font = ExtResource("2_fjf5w")
+text = "On Slope"
+
+[node name="BeingPushed" type="Label" parent="Debug/States"]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.133333, 0.12549, 0.203922, 1)
+theme_override_fonts/font = ExtResource("2_fjf5w")
+text = "Being Pushed"
+
+[node name="RollingBack" type="Label" parent="Debug/States"]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.133333, 0.12549, 0.203922, 1)
+theme_override_fonts/font = ExtResource("2_fjf5w")
+text = "Rolling Back Down"
+
+[node name="IgnoringPlayer" type="Label" parent="Debug/States"]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.133333, 0.12549, 0.203922, 1)
+theme_override_fonts/font = ExtResource("2_fjf5w")
+text = "Ignoring Player"
+
+[node name="SlowingDown" type="Label" parent="Debug/States"]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.133333, 0.12549, 0.203922, 1)
+theme_override_fonts/font = ExtResource("2_fjf5w")
+text = "Slowing Down"

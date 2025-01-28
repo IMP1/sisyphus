@@ -1,0 +1,393 @@
+[gd_scene load_steps=32 format=3 uid="uid://bmmxp1wfxvkdy"]
+
+[ext_resource type="PackedScene" uid="uid://hgrs4mee2nt2" path="res://objects/player.tscn" id="1_o0w33"]
+[ext_resource type="Script" path="res://scenes/game.gd" id="1_yacr7"]
+[ext_resource type="Script" path="res://defs/progress.gd" id="2_crm8m"]
+[ext_resource type="PackedScene" uid="uid://de0o8rcvv3bp4" path="res://objects/boulder.tscn" id="2_llx8j"]
+[ext_resource type="Texture2D" uid="uid://gu8dcgyunp57" path="res://assets/grass.png" id="4_vipsa"]
+[ext_resource type="StyleBox" uid="uid://dlg6i1mgpiwsh" path="res://resources/ui_panel.tres" id="5_r74ex"]
+[ext_resource type="FontFile" uid="uid://c82waaftc041a" path="res://assets/Caesar_Dressing/CaesarDressing-Regular.ttf" id="6_5yoec"]
+[ext_resource type="AudioStream" uid="uid://du3g448irhky8" path="res://assets/audio/box-crash-106687.ogg" id="6_ls4y2"]
+[ext_resource type="Texture2D" uid="uid://d1lvvmn30y87w" path="res://assets/ui_spiral.png" id="6_peg8h"]
+[ext_resource type="Texture2D" uid="uid://bmevumavk6uuc" path="res://assets/ui_progress_bg.png" id="7_j14tc"]
+[ext_resource type="AudioStream" uid="uid://do2q3a77jfurb" path="res://assets/audio/oedipus-at-colonus-part-b-113597.mp3" id="8_88mte"]
+[ext_resource type="Texture2D" uid="uid://bux2jt40bghsg" path="res://assets/ui_progress_fill.png" id="8_m3yg6"]
+[ext_resource type="Theme" uid="uid://b6h2wm00ubtmo" path="res://resources/theme_upgrade_shop.tres" id="9_syl23"]
+[ext_resource type="PackedScene" uid="uid://cepbq2w163120" path="res://ui/upgrade_shop.tscn" id="11_pi8ye"]
+[ext_resource type="AudioStream" uid="uid://bftyaphib8m1b" path="res://assets/audio/wind-artificial-18750.mp3" id="13_cii20"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_0kx8y"]
+streams_count = 1
+stream_0/stream = ExtResource("8_88mte")
+
+[sub_resource type="Resource" id="Resource_4be2w"]
+script = ExtResource("2_crm8m")
+attempts = 0
+upgrade_points = 0
+suicides = 0
+time_played_seconds = 0.0
+distance_walked = 0.0
+hill_height = 0
+hill_steepness = 0
+hill_unlocked_extras = 0
+hill_active_extras = 0
+sisyphus_speed = 0
+sisyphus_strength = 0
+sisyphus_contentedness = 0
+sisyphus_unlocked_hats = 0
+sisyphus_current_hats = 0
+boulder_size = 0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fpfet"]
+size = Vector2(386, 1150)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5leby"]
+radius = 58.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0gn06"]
+size = Vector2(30, 170)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_psqnn"]
+size = Vector2(338, 136)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ludhv"]
+size = Vector2(306, 20)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_pdaiy"]
+content_margin_left = 32.0
+content_margin_top = 24.0
+content_margin_right = 32.0
+content_margin_bottom = 16.0
+texture = ExtResource("6_peg8h")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[sub_resource type="InputEventAction" id="InputEventAction_37i6r"]
+action = &"open_upgrades"
+pressed = true
+
+[sub_resource type="Shortcut" id="Shortcut_bsjnw"]
+events = [SubResource("InputEventAction_37i6r")]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vsofj"]
+bg_color = Color(0.933333, 0.764706, 0.603922, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.133333, 0.12549, 0.203922, 1)
+
+[sub_resource type="Theme" id="Theme_j6s7e"]
+default_font = ExtResource("6_5yoec")
+default_font_size = 20
+Button/colors/font_color = Color(0.133333, 0.12549, 0.203922, 1)
+Button/colors/icon_normal_color = Color(0.133333, 0.12549, 0.203922, 1)
+Button/styles/normal = SubResource("StyleBoxFlat_vsofj")
+Label/colors/font_color = Color(0.133333, 0.12549, 0.203922, 1)
+
+[sub_resource type="InputEventAction" id="InputEventAction_woh41"]
+action = &"open_menu"
+pressed = true
+
+[sub_resource type="Shortcut" id="Shortcut_gomxs"]
+events = [SubResource("InputEventAction_woh41")]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_e2lkr"]
+color = Color(0.133333, 0.12549, 0.203922, 1)
+thickness = 2
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_th8hi"]
+texture = ExtResource("6_peg8h")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[node name="Game" type="Node2D" node_paths=PackedStringArray("player", "player_spawn", "boulder_spawn", "boulder", "pit", "pit_top", "hilltop")]
+script = ExtResource("1_yacr7")
+background_music = SubResource("AudioStreamRandomizer_0kx8y")
+progress = SubResource("Resource_4be2w")
+player = NodePath("Player")
+player_spawn = NodePath("PlayerSpawn")
+boulder_spawn = NodePath("BoulderSpawn")
+boulder = NodePath("Boulder")
+pit = NodePath("World/Pit")
+pit_top = NodePath("World/Pit/Top")
+hilltop = NodePath("World/Hill/Top")
+
+[node name="Player" parent="." instance=ExtResource("1_o0w33")]
+position = Vector2(187, 0)
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+zoom = Vector2(2, 2)
+
+[node name="Boulder" parent="." instance=ExtResource("2_llx8j")]
+position = Vector2(318, 0)
+
+[node name="World" type="Node2D" parent="."]
+
+[node name="Ground" type="StaticBody2D" parent="World"]
+position = Vector2(4, 6)
+collision_mask = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Ground"]
+position = Vector2(189, 569)
+shape = SubResource("RectangleShape2D_fpfet")
+
+[node name="Polygon2D" type="Polygon2D" parent="World/Ground"]
+color = Color(0.933333, 0.764706, 0.603922, 1)
+polygon = PackedVector2Array(-4, -6, 382, -6, 382, 1144, -4, 1144)
+
+[node name="Polygon2D2" type="Polygon2D" parent="World/Ground"]
+color = Color(0.933333, 0.764706, 0.603922, 1)
+polygon = PackedVector2Array(-1275, -6, -306, -6, -305, 1154, -1273, 1147)
+
+[node name="Grass" type="Polygon2D" parent="World/Ground"]
+texture_filter = 1
+texture_repeat = 2
+scale = Vector2(2, 3)
+texture = ExtResource("4_vipsa")
+polygon = PackedVector2Array(-2, -3, 189.5, -3, 189.5, 2, -2, 1.66667)
+uv = PackedVector2Array(-4, -11, 381, -11, 380, 1, -4, 2)
+
+[node name="Hill" type="StaticBody2D" parent="World"]
+position = Vector2(57, -433)
+collision_mask = 7
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="World/Hill"]
+polygon = PackedVector2Array(327, 433, 540, 274, 672, 164, 819, 57, 866, 35, 996, 58, 1064, 39, 1297, 142, 1354, 233, 1491, 372, 1771, 481, 1775, 627, 327, 628)
+
+[node name="Polygon2D" type="Polygon2D" parent="World/Hill"]
+color = Color(0.933333, 0.764706, 0.603922, 1)
+polygon = PackedVector2Array(326, 433, 540, 274, 672, 164, 818, 57, 868, 32, 932, 46, 994, 56, 1058, 40, 1297, 142, 1349, 228, 1486, 368, 1771, 482, 1776, 971, 326, 969)
+
+[node name="Top" type="Area2D" parent="World/Hill"]
+position = Vector2(742, 73)
+collision_layer = 0
+collision_mask = 4
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Hill/Top"]
+shape = SubResource("CircleShape2D_5leby")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="World/Hill/Top"]
+position = Vector2(47, -36)
+collision_mask = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Hill/Top/StaticBody2D"]
+rotation = -0.523599
+shape = SubResource("RectangleShape2D_0gn06")
+
+[node name="Pit" type="Area2D" parent="World"]
+position = Vector2(-151, 966)
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Pit"]
+shape = SubResource("RectangleShape2D_psqnn")
+
+[node name="Top" type="Area2D" parent="World/Pit"]
+position = Vector2(0, -955)
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Pit/Top"]
+shape = SubResource("RectangleShape2D_ludhv")
+
+[node name="PlayerSpawn" type="Marker2D" parent="."]
+position = Vector2(187, 0)
+
+[node name="ThumpSound" type="AudioStreamPlayer2D" parent="PlayerSpawn"]
+stream = ExtResource("6_ls4y2")
+bus = &"DiegeticSounds"
+
+[node name="BoulderSpawn" type="Marker2D" parent="."]
+position = Vector2(224, 0)
+
+[node name="FallingSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("13_cii20")
+bus = &"DiegeticSounds"
+
+[node name="GUI" type="CanvasLayer" parent="."]
+
+[node name="Progress" type="Control" parent="GUI"]
+custom_minimum_size = Vector2(128, 96)
+layout_mode = 3
+anchor_right = 0.5
+offset_left = 320.0
+offset_top = 24.0
+offset_right = -128.0
+offset_bottom = 120.0
+grow_horizontal = 2
+
+[node name="Panel" type="PanelContainer" parent="GUI/Progress"]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -80.0
+offset_right = 80.0
+offset_bottom = 117.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_pdaiy")
+
+[node name="Contents" type="VBoxContainer" parent="GUI/Progress/Panel"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="GUI/Progress/Panel/Contents"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.133333, 0.12549, 0.203922, 1)
+theme_override_fonts/font = ExtResource("6_5yoec")
+theme_override_font_sizes/font_size = 16
+text = "Attempts"
+horizontal_alignment = 1
+
+[node name="ProgressBar" type="TextureProgressBar" parent="GUI/Progress/Panel/Contents"]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 4
+max_value = 5.0
+texture_under = ExtResource("7_j14tc")
+texture_progress = ExtResource("8_m3yg6")
+
+[node name="Value" type="Button" parent="GUI/Progress/Panel/Contents"]
+texture_filter = 1
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0.133333, 0.12549, 0.203922, 1)
+theme_override_fonts/font = ExtResource("6_5yoec")
+theme_override_font_sizes/font_size = 24
+shortcut = SubResource("Shortcut_bsjnw")
+shortcut_in_tooltip = false
+text = "0"
+flat = true
+
+[node name="Menu" type="Control" parent="GUI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = SubResource("Theme_j6s7e")
+
+[node name="Button" type="Button" parent="GUI/Menu"]
+layout_mode = 1
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 96.0
+offset_bottom = 58.0
+mouse_default_cursor_shape = 2
+theme = ExtResource("9_syl23")
+shortcut = SubResource("Shortcut_gomxs")
+shortcut_in_tooltip = false
+text = "Menu"
+
+[node name="Modal" type="ColorRect" parent="GUI/Menu"]
+process_mode = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.501961)
+
+[node name="PanelContainer" type="PanelContainer" parent="GUI/Menu/Modal"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -33.0
+offset_top = -20.0
+offset_right = 33.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("5_r74ex")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GUI/Menu/Modal/PanelContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="GUI/Menu/Modal/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Paused"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="GUI/Menu/Modal/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_e2lkr")
+
+[node name="Resume" type="Button" parent="GUI/Menu/Modal/PanelContainer/VBoxContainer"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../Quit")
+text = "Resume"
+
+[node name="GiveUp" type="Button" parent="GUI/Menu/Modal/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Give Up"
+
+[node name="Settings" type="Button" parent="GUI/Menu/Modal/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Settings"
+
+[node name="Quit" type="Button" parent="GUI/Menu/Modal/PanelContainer/VBoxContainer"]
+layout_mode = 2
+focus_neighbor_bottom = NodePath("../Resume")
+text = "Quit"
+
+[node name="UpgradeShop" parent="GUI" instance=ExtResource("11_pi8ye")]
+visible = false
+
+[node name="QuitConfirmation" type="PopupPanel" parent="."]
+process_mode = 2
+title = "Quit"
+initial_position = 1
+size = Vector2i(192, 128)
+theme = ExtResource("9_syl23")
+
+[node name="Panel" type="PanelContainer" parent="QuitConfirmation"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_th8hi")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="QuitConfirmation/Panel"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+alignment = 1
+
+[node name="QuitTitle" type="Button" parent="QuitConfirmation/Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Quit to Title"
+
+[node name="QuitDesktop" type="Button" parent="QuitConfirmation/Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Quit to Desktop"
+
+[node name="Cancel" type="Button" parent="QuitConfirmation/Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Cancel"

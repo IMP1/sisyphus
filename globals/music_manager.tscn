@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://dkrbisia1bb68"]
+
+[ext_resource type="Script" path="res://globals/music_manager.gd" id="1_71c3d"]
+
+[node name="MusicManager" type="Node"]
+script = ExtResource("1_71c3d")
+
+[node name="Track1" type="AudioStreamPlayer" parent="."]
+
+[node name="Track2" type="AudioStreamPlayer" parent="."]

@@ -1,0 +1,96 @@
+[gd_scene load_steps=7 format=3 uid="uid://hgrs4mee2nt2"]
+
+[ext_resource type="Script" path="res://objects/player.gd" id="1_3crm3"]
+[ext_resource type="FontFile" uid="uid://c82waaftc041a" path="res://assets/Caesar_Dressing/CaesarDressing-Regular.ttf" id="2_gl74h"]
+[ext_resource type="SpriteFrames" uid="uid://3g1i2b02gu3a" path="res://assets/player.aseprite" id="2_jgxjn"]
+[ext_resource type="Texture2D" uid="uid://cjpebdr248dw5" path="res://assets/test_player.png" id="2_kmyio"]
+[ext_resource type="AudioStream" uid="uid://cw2e76xgdapfj" path="res://assets/audio/footstep.ogg" id="4_d1qey"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5xc1e"]
+radius = 4.0
+height = 20.0
+
+[node name="Player" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 7
+script = ExtResource("1_3crm3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, -10)
+shape = SubResource("CapsuleShape2D_5xc1e")
+
+[node name="SlopeRay" type="RayCast2D" parent="."]
+position = Vector2(0, -3)
+target_position = Vector2(10, 0)
+hit_from_inside = true
+
+[node name="BoulderRayFlat" type="RayCast2D" parent="."]
+position = Vector2(0, -9)
+target_position = Vector2(9, 0)
+collision_mask = 4
+hit_from_inside = true
+
+[node name="BoulderRaySlope" type="RayCast2D" parent="."]
+position = Vector2(0, -16)
+target_position = Vector2(9, -5)
+collision_mask = 4
+hit_from_inside = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+modulate = Color(0.933333, 0.764706, 0.603922, 1)
+texture_filter = 1
+position = Vector2(2, -15)
+sprite_frames = ExtResource("2_jgxjn")
+animation = &"PushUp"
+autoplay = "Idle"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+modulate = Color(0.933333, 0.764706, 0.603922, 1)
+texture_filter = 1
+position = Vector2(2, -15)
+texture = ExtResource("2_kmyio")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+visible = false
+color = Color(0.933333, 0.764706, 0.603922, 1)
+polygon = PackedVector2Array(-2, -21, -6, -19, -9, -16, -10, -12, -7, -7, 0, -7, 11, -8, 10, -15, 6, -21, 4, -21, 7, -25, 6, -29, 1, -30, -3, -28, -3, -25)
+
+[node name="Polygon2D2" type="Polygon2D" parent="."]
+visible = false
+color = Color(0.933333, 0.764706, 0.603922, 1)
+polygon = PackedVector2Array(-7, -7, -7, 1, -2, 0, -1, -6, 4, -6, 5, 1, 11, 1, 11, -8)
+
+[node name="FootstepsSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_d1qey")
+bus = &"DiegeticSounds"
+
+[node name="Debug" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="States" type="VBoxContainer" parent="Debug"]
+offset_left = 40.0
+offset_top = 89.0
+offset_right = 167.0
+offset_bottom = 139.0
+
+[node name="OnSlope" type="Label" parent="Debug/States"]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.933333, 0.764706, 0.603922, 1)
+theme_override_fonts/font = ExtResource("2_gl74h")
+text = "On Slope"
+
+[node name="PushingBoulder" type="Label" parent="Debug/States"]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.933333, 0.764706, 0.603922, 1)
+theme_override_fonts/font = ExtResource("2_gl74h")
+text = "Pushing Boulder"
+
+[node name="Falling" type="Label" parent="Debug/States"]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.933333, 0.764706, 0.603922, 1)
+theme_override_fonts/font = ExtResource("2_gl74h")
+text = "Falling"

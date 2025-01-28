@@ -1,0 +1,89 @@
+[gd_scene load_steps=6 format=3 uid="uid://2feb5o7cxvsj"]
+
+[ext_resource type="Theme" uid="uid://b6h2wm00ubtmo" path="res://resources/theme_upgrade_shop.tres" id="1_26w8y"]
+[ext_resource type="StyleBox" uid="uid://dlg6i1mgpiwsh" path="res://resources/ui_panel.tres" id="1_bxnmm"]
+[ext_resource type="Script" path="res://scenes/title.gd" id="2_capq5"]
+[ext_resource type="AudioStream" uid="uid://knehff4nncbk" path="res://assets/audio/thesatyrsdance-167125.mp3" id="3_1cy6x"]
+[ext_resource type="Texture2D" uid="uid://do81rae651cjf" path="res://assets/title.png" id="3_m0c33"]
+
+[node name="Title" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_26w8y")
+script = ExtResource("2_capq5")
+background_music = ExtResource("3_1cy6x")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("1_bxnmm")
+
+[node name="Contents" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/Contents"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "One Must Imagine Sisyphus Happy..."
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="PanelContainer/Contents"]
+layout_mode = 2
+
+[node name="Main" type="HBoxContainer" parent="PanelContainer/Contents"]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/Contents/Main"]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("3_m0c33")
+stretch_mode = 3
+
+[node name="Actions" type="VBoxContainer" parent="PanelContainer/Contents/Main"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="Play" type="Button" parent="PanelContainer/Contents/Main/Actions"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../Quit")
+text = "Play"
+
+[node name="Settings" type="Button" parent="PanelContainer/Contents/Main/Actions"]
+layout_mode = 2
+text = "Settings"
+
+[node name="Credits" type="Button" parent="PanelContainer/Contents/Main/Actions"]
+layout_mode = 2
+disabled = true
+text = "Credits"
+
+[node name="Quit" type="Button" parent="PanelContainer/Contents/Main/Actions"]
+layout_mode = 2
+focus_neighbor_bottom = NodePath("../Play")
+text = "Quit"
+
+[node name="TextureRect2" type="TextureRect" parent="PanelContainer/Contents/Main"]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("3_m0c33")
+stretch_mode = 3
+
+[node name="Label2" type="Label" parent="PanelContainer/Contents"]
+layout_mode = 2
+text = "A game by Huw Taylor"
+horizontal_alignment = 1
