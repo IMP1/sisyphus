@@ -15,7 +15,7 @@ class_name GameProgress
 @export var sisyphus_speed: int = 0
 @export var sisyphus_strength: int = 0
 @export var sisyphus_contentedness: int = 0
-@export_flags("Bowler", "Fez") var sisyphus_unlocked_hats: int = 0
+@export_flags("Bowler", "Fez", "Sombrero", "Top Hat") var sisyphus_unlocked_hats: int = 0
 @export var sisyphus_current_hats: int = 0
 
 @export var boulder_size: int = 0

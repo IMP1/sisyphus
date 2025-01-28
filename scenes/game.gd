@@ -200,12 +200,13 @@ func _DEBUG_show_progress() -> void:
 
 
 func _game_over() -> void:
-	# TODO: Show a GUI with progress
-	_DEBUG_show_progress()
-	
-	_quit_to_title()
+	#_DEBUG_show_progress()
+	var scene := preload("res://scenes/summary.tscn").instantiate() as SummaryScene
+	scene.progress = progress
 	print("Deleting progress from %s" % PROGRESS_FILENAME)
 	DirAccess.remove_absolute(PROGRESS_FILENAME)
+	get_tree().root.add_child(scene)
+	get_tree().root.remove_child(self)
 
 
 func _open_settings() -> void:

@@ -13,6 +13,9 @@ config_version=5
 config/name="One Must Imagine Sisyphus Happy"
 run/main_scene="res://scenes/title.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
+boot_splash/bg_color=Color(0.133333, 0.12549, 0.203922, 1)
+boot_splash/image="res://assets/title.png"
+boot_splash/fullsize=false
 config/icon="res://icon.svg"
 
 [autoload]
@@ -23,6 +26,14 @@ MusicManager="*res://globals/music_manager.tscn"
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/AsepriteWizard/plugin.cfg")
+
+[file_customization]
+
+folder_colors={
+"res://media/": "gray",
+"res://references/": "gray",
+"res://releases/": "gray"
+}
 
 [input]
 

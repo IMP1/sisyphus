@@ -1,0 +1,295 @@
+[gd_scene load_steps=5 format=3 uid="uid://dxa4ivgqjdx57"]
+
+[ext_resource type="Script" path="res://scenes/summary.gd" id="1_mqwis"]
+[ext_resource type="Theme" uid="uid://b6h2wm00ubtmo" path="res://resources/theme_upgrade_shop.tres" id="1_spxwb"]
+[ext_resource type="StyleBox" uid="uid://dlg6i1mgpiwsh" path="res://resources/ui_panel.tres" id="3_r3wca"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0pybm"]
+
+[node name="Summary" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_spxwb")
+script = ExtResource("1_mqwis")
+
+[node name="Panel" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("3_r3wca")
+
+[node name="Contents" type="VBoxContainer" parent="Panel"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/Contents"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "Sisyphus"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="Panel/Contents"]
+layout_mode = 2
+
+[node name="Stats" type="HFlowContainer" parent="Panel/Contents"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/h_separation = 64
+theme_override_constants/v_separation = 64
+alignment = 1
+
+[node name="General" type="VBoxContainer" parent="Panel/Contents/Stats"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/Contents/Stats/General"]
+layout_mode = 2
+text = "Stats"
+horizontal_alignment = 1
+
+[node name="TimePlayed" type="HBoxContainer" parent="Panel/Contents/Stats/General"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/Contents/Stats/General/TimePlayed"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+text = "Time Played: "
+
+[node name="Value" type="Label" parent="Panel/Contents/Stats/General/TimePlayed"]
+layout_mode = 2
+text = "00:00"
+
+[node name="DistanceTravelled" type="HBoxContainer" parent="Panel/Contents/Stats/General"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/Contents/Stats/General/DistanceTravelled"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+text = "Distance Travelled: "
+
+[node name="Value" type="Label" parent="Panel/Contents/Stats/General/DistanceTravelled"]
+layout_mode = 2
+text = "0m"
+
+[node name="RollAttempts" type="HBoxContainer" parent="Panel/Contents/Stats/General"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/Contents/Stats/General/RollAttempts"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+text = "Roll Attempts: "
+
+[node name="Value" type="Label" parent="Panel/Contents/Stats/General/RollAttempts"]
+layout_mode = 2
+text = "0"
+
+[node name="Suicides" type="HBoxContainer" parent="Panel/Contents/Stats/General"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/Contents/Stats/General/Suicides"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+text = "Suicide Attempts: "
+
+[node name="Value" type="Label" parent="Panel/Contents/Stats/General/Suicides"]
+layout_mode = 2
+text = "0"
+
+[node name="HSeparator" type="HSeparator" parent="Panel/Contents/Stats/General"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxEmpty_0pybm")
+
+[node name="Upgrades" type="VBoxContainer" parent="Panel/Contents/Stats"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/Contents/Stats/Upgrades"]
+layout_mode = 2
+text = "Upgrades"
+horizontal_alignment = 1
+
+[node name="SpentPoints" type="HBoxContainer" parent="Panel/Contents/Stats/Upgrades"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/Contents/Stats/Upgrades/SpentPoints"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+text = "Upgrades Taken: "
+
+[node name="Value" type="Label" parent="Panel/Contents/Stats/Upgrades/SpentPoints"]
+layout_mode = 2
+text = "0"
+
+[node name="UnspentPoints" type="HBoxContainer" parent="Panel/Contents/Stats/Upgrades"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/Contents/Stats/Upgrades/UnspentPoints"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+text = "Unspent Upgrades: "
+
+[node name="Value" type="Label" parent="Panel/Contents/Stats/Upgrades/UnspentPoints"]
+layout_mode = 2
+text = "0"
+
+[node name="Unlocks" type="VBoxContainer" parent="Panel/Contents/Stats"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/Contents/Stats/Unlocks"]
+layout_mode = 2
+text = "Unlocks"
+horizontal_alignment = 1
+
+[node name="UnlockedHats" type="HBoxContainer" parent="Panel/Contents/Stats/Unlocks"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/Contents/Stats/Unlocks/UnlockedHats"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+size_flags_vertical = 0
+text = "Unlocked Hats: "
+
+[node name="List" type="VBoxContainer" parent="Panel/Contents/Stats/Unlocks/UnlockedHats"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Panel/Contents/Stats/Unlocks/UnlockedHats/List"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="Panel/Contents/Stats/Unlocks/UnlockedHats/List"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+
+[node name="TextureRect3" type="TextureRect" parent="Panel/Contents/Stats/Unlocks/UnlockedHats/List"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+
+[node name="TextureRect4" type="TextureRect" parent="Panel/Contents/Stats/Unlocks/UnlockedHats/List"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+
+[node name="UnlockedSpecials" type="HBoxContainer" parent="Panel/Contents/Stats/Unlocks"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/Contents/Stats/Unlocks/UnlockedSpecials"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+size_flags_vertical = 0
+text = "Unlocked Specials: "
+
+[node name="List" type="VBoxContainer" parent="Panel/Contents/Stats/Unlocks/UnlockedSpecials"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Panel/Contents/Stats/Unlocks/UnlockedSpecials/List"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="Panel/Contents/Stats/Unlocks/UnlockedSpecials/List"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+
+[node name="Boulder" type="VBoxContainer" parent="Panel/Contents/Stats"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/Contents/Stats/Boulder"]
+layout_mode = 2
+text = "Boulder"
+horizontal_alignment = 1
+
+[node name="Size" type="HBoxContainer" parent="Panel/Contents/Stats/Boulder"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/Contents/Stats/Boulder/Size"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+text = "Size:"
+
+[node name="Value" type="Label" parent="Panel/Contents/Stats/Boulder/Size"]
+layout_mode = 2
+text = "0"
+
+[node name="Hill" type="VBoxContainer" parent="Panel/Contents/Stats"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/Contents/Stats/Hill"]
+layout_mode = 2
+text = "Hill"
+horizontal_alignment = 1
+
+[node name="Height" type="HBoxContainer" parent="Panel/Contents/Stats/Hill"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/Contents/Stats/Hill/Height"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+text = "Height:"
+
+[node name="Value" type="Label" parent="Panel/Contents/Stats/Hill/Height"]
+layout_mode = 2
+text = "0"
+
+[node name="Steepness" type="HBoxContainer" parent="Panel/Contents/Stats/Hill"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/Contents/Stats/Hill/Steepness"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+text = "Steepness:"
+
+[node name="Value" type="Label" parent="Panel/Contents/Stats/Hill/Steepness"]
+layout_mode = 2
+text = "0"
+
+[node name="Sisyphus" type="VBoxContainer" parent="Panel/Contents/Stats"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/Contents/Stats/Sisyphus"]
+layout_mode = 2
+text = "Sisyphus"
+horizontal_alignment = 1
+
+[node name="Strength" type="HBoxContainer" parent="Panel/Contents/Stats/Sisyphus"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/Contents/Stats/Sisyphus/Strength"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+text = "Strength:"
+
+[node name="Value" type="Label" parent="Panel/Contents/Stats/Sisyphus/Strength"]
+layout_mode = 2
+text = "0"
+
+[node name="Speed" type="HBoxContainer" parent="Panel/Contents/Stats/Sisyphus"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/Contents/Stats/Sisyphus/Speed"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+text = "Speed:"
+
+[node name="Value" type="Label" parent="Panel/Contents/Stats/Sisyphus/Speed"]
+layout_mode = 2
+text = "0"
+
+[node name="Contentedness" type="HBoxContainer" parent="Panel/Contents/Stats/Sisyphus"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/Contents/Stats/Sisyphus/Contentedness"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+text = "Contentedness:"
+
+[node name="Value" type="Label" parent="Panel/Contents/Stats/Sisyphus/Contentedness"]
+layout_mode = 2
+text = "0"
+
+[node name="Continue" type="Button" parent="Panel/Contents"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Continue"
