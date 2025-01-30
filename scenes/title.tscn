@@ -69,7 +69,6 @@ text = "Settings"
 
 [node name="Credits" type="Button" parent="PanelContainer/Contents/Main/Actions"]
 layout_mode = 2
-disabled = true
 text = "Credits"
 
 [node name="Quit" type="Button" parent="PanelContainer/Contents/Main/Actions"]

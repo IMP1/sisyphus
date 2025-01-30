@@ -1,6 +1,9 @@
 extends CharacterBody2D
 class_name Boulder
 
+signal started_moving
+signal stopped_moving
+
 const PLAYER_PHYSICS_LAYER := 2
 const BOULDER_PHYSICS_LAYER := 3
 
@@ -47,10 +50,12 @@ func _physics_process(delta: float) -> void:
 		gravity_speed = 0
 	velocity.y += gravity_speed
 	move_and_slide()
-	if velocity == Vector2.ZERO:
+	if velocity == Vector2.ZERO and _scrape_sound.playing:
 		_scrape_sound.stop()
-	elif not _scrape_sound.playing:
+		stopped_moving.emit()
+	elif velocity != Vector2.ZERO and not _scrape_sound.playing:
 		_scrape_sound.play()
+		started_moving.emit()
 
 
 func _wait_for_reset() -> void:

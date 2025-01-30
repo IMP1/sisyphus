@@ -1,9 +1,175 @@
-[gd_scene format=3 uid="uid://bmeoiip7tuqbq"]
+[gd_scene load_steps=13 format=3 uid="uid://bmeoiip7tuqbq"]
+
+[ext_resource type="Theme" uid="uid://b6h2wm00ubtmo" path="res://resources/theme_upgrade_shop.tres" id="1_dvjg3"]
+[ext_resource type="Script" path="res://scenes/credits.gd" id="1_l2d7g"]
+[ext_resource type="StyleBox" uid="uid://dlg6i1mgpiwsh" path="res://resources/ui_panel.tres" id="1_yvgvc"]
+[ext_resource type="Texture2D" uid="uid://do81rae651cjf" path="res://assets/title.png" id="4_gfqqm"]
+[ext_resource type="Texture2D" uid="uid://brllatcs3wfee" path="res://icon.svg" id="4_o7wow"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qvdbk"]
+draw_center = false
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_en2od"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_l05fa"]
+
+[sub_resource type="Gradient" id="Gradient_xiehh"]
+colors = PackedColorArray(0.85098, 0.627451, 0.4, 1, 0.85098, 0.627451, 0.4, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_2nokk"]
+gradient = SubResource("Gradient_xiehh")
+fill_from = Vector2(1, 1)
+
+[sub_resource type="Gradient" id="Gradient_g0d1q"]
+colors = PackedColorArray(0.85098, 0.627451, 0.4, 1, 0.85098, 0.627451, 0.4, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_yhuqu"]
+gradient = SubResource("Gradient_g0d1q")
+height = 32
+fill_to = Vector2(0, 1)
 
 [node name="Credits" type="Control"]
+process_mode = 3
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_dvjg3")
+script = ExtResource("1_l2d7g")
+
+[node name="Panel" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("1_yvgvc")
+
+[node name="Main" type="VBoxContainer" parent="Panel"]
+layout_mode = 2
+
+[node name="Credits" type="ScrollContainer" parent="Panel/Main"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_qvdbk")
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 3
+
+[node name="List" type="VBoxContainer" parent="Panel/Main/Credits"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Padding0" type="HSeparator" parent="Panel/Main/Credits/List"]
+layout_mode = 2
+theme_override_constants/separation = 416
+theme_override_styles/separator = SubResource("StyleBoxEmpty_en2od")
+
+[node name="GameTitle" type="Label" parent="Panel/Main/Credits/List"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "One Must Imagine Sisyphus Happy"
+horizontal_alignment = 1
+
+[node name="Underline" type="HSeparator" parent="Panel/Main/Credits/List"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Padding1" type="HSeparator" parent="Panel/Main/Credits/List"]
+layout_mode = 2
+theme_override_constants/separation = 48
+theme_override_styles/separator = SubResource("StyleBoxEmpty_en2od")
+
+[node name="Author" type="Label" parent="Panel/Main/Credits/List"]
+layout_mode = 2
+text = "A game by Huw Taylor"
+horizontal_alignment = 1
+
+[node name="Padding2" type="HSeparator" parent="Panel/Main/Credits/List"]
+layout_mode = 2
+theme_override_constants/separation = 48
+theme_override_styles/separator = SubResource("StyleBoxEmpty_en2od")
+
+[node name="Credits" type="VBoxContainer" parent="Panel/Main/Credits/List"]
+layout_mode = 2
+
+[node name="Padding3" type="HSeparator" parent="Panel/Main/Credits/List"]
+layout_mode = 2
+theme_override_constants/separation = 48
+theme_override_styles/separator = SubResource("StyleBoxEmpty_en2od")
+
+[node name="Godot" type="TextureRect" parent="Panel/Main/Credits/List"]
+layout_mode = 2
+texture = ExtResource("4_o7wow")
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="Panel/Main/Credits/List"]
+layout_mode = 2
+text = "Made with Godot"
+horizontal_alignment = 1
+
+[node name="Padding4" type="HSeparator" parent="Panel/Main/Credits/List"]
+layout_mode = 2
+theme_override_constants/separation = 96
+theme_override_styles/separator = SubResource("StyleBoxEmpty_en2od")
+
+[node name="TextureRect" type="TextureRect" parent="Panel/Main/Credits/List"]
+layout_mode = 2
+texture = ExtResource("4_gfqqm")
+stretch_mode = 3
+
+[node name="TitleEnd" type="Label" parent="Panel/Main/Credits/List"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "One Must Imagine Sisyphus Happy"
+horizontal_alignment = 1
+
+[node name="Padding5" type="HSeparator" parent="Panel/Main/Credits/List"]
+layout_mode = 2
+theme_override_constants/separation = 160
+theme_override_styles/separator = SubResource("StyleBoxEmpty_en2od")
+
+[node name="Actions" type="HBoxContainer" parent="Panel/Main"]
+layout_mode = 2
+
+[node name="Close" type="Button" parent="Panel/Main/Actions"]
+layout_mode = 2
+text = "Return"
+
+[node name="VSeparator" type="VSeparator" parent="Panel/Main/Actions"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/separator = SubResource("StyleBoxEmpty_l05fa")
+
+[node name="Pause" type="Button" parent="Panel/Main/Actions"]
+layout_mode = 2
+toggle_mode = true
+text = "Pause"
+
+[node name="FadeBottom" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 75.0
+offset_top = -210.0
+offset_right = -75.0
+offset_bottom = -86.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = SubResource("GradientTexture2D_2nokk")
+
+[node name="FadeTop" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 31.0
+offset_top = 32.0
+offset_right = -31.0
+offset_bottom = 64.0
+grow_horizontal = 2
+texture = SubResource("GradientTexture2D_yhuqu")

@@ -1,5 +1,7 @@
 extends Node
 
+signal settings_changed
+
 const AUDIO_BUS_MASTER := 0
 const AUDIO_BUS_SOUNDS := 1
 const AUDIO_BUS_MUSIC := 2
@@ -15,6 +17,7 @@ func _ready() -> void:
 	else:
 		settings = UserSettings.new()
 	settings.changed.connect(apply_settings)
+	settings.changed.connect(settings_changed.emit)
 	apply_settings()
 
 

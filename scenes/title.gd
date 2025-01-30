@@ -35,8 +35,11 @@ func _settings() -> void:
 
 
 func _credits() -> void:
-	#var scene := preload("res://scenes/credits.tscn")
-	pass
+	var scene := preload("res://scenes/credits.tscn").instantiate() as CreditsScene
+	add_child(scene)
+	scene.close_requested.connect(func():
+		remove_child(scene)
+		scene.queue_free())
 
 
 func _quit_to_desktop() -> void:

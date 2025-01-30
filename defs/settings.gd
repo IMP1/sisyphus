@@ -14,4 +14,6 @@ const LANGUAGES: Array = [
 
 @export var language: int = 0
 
+@export_range(0.0, 2.0) var screenshake_strength: float = 1.0
+
 # TODO: Keybinds

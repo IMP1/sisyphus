@@ -1,10 +1,11 @@
-[gd_scene load_steps=32 format=3 uid="uid://bmmxp1wfxvkdy"]
+[gd_scene load_steps=34 format=3 uid="uid://bmmxp1wfxvkdy"]
 
 [ext_resource type="PackedScene" uid="uid://hgrs4mee2nt2" path="res://objects/player.tscn" id="1_o0w33"]
 [ext_resource type="Script" path="res://scenes/game.gd" id="1_yacr7"]
 [ext_resource type="Script" path="res://defs/progress.gd" id="2_crm8m"]
 [ext_resource type="PackedScene" uid="uid://de0o8rcvv3bp4" path="res://objects/boulder.tscn" id="2_llx8j"]
 [ext_resource type="Texture2D" uid="uid://gu8dcgyunp57" path="res://assets/grass.png" id="4_vipsa"]
+[ext_resource type="Script" path="res://objects/shakeable_camera.gd" id="5_06n1k"]
 [ext_resource type="StyleBox" uid="uid://dlg6i1mgpiwsh" path="res://resources/ui_panel.tres" id="5_r74ex"]
 [ext_resource type="FontFile" uid="uid://c82waaftc041a" path="res://assets/Caesar_Dressing/CaesarDressing-Regular.ttf" id="6_5yoec"]
 [ext_resource type="AudioStream" uid="uid://du3g448irhky8" path="res://assets/audio/box-crash-106687.ogg" id="6_ls4y2"]
@@ -37,6 +38,8 @@ sisyphus_contentedness = 0
 sisyphus_unlocked_hats = 0
 sisyphus_current_hats = 0
 boulder_size = 0
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_iimy3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fpfet"]
 size = Vector2(386, 1150)
@@ -109,7 +112,7 @@ texture_margin_bottom = 16.0
 axis_stretch_horizontal = 1
 axis_stretch_vertical = 1
 
-[node name="Game" type="Node2D" node_paths=PackedStringArray("player", "player_spawn", "boulder_spawn", "boulder", "pit", "pit_top", "hilltop")]
+[node name="Game" type="Node2D" node_paths=PackedStringArray("player", "player_spawn", "boulder_spawn", "boulder", "pit", "pit_top", "hilltop", "camera")]
 script = ExtResource("1_yacr7")
 background_music = SubResource("AudioStreamRandomizer_0kx8y")
 progress = SubResource("Resource_4be2w")
@@ -120,12 +123,15 @@ boulder = NodePath("Boulder")
 pit = NodePath("World/Pit")
 pit_top = NodePath("World/Pit/Top")
 hilltop = NodePath("World/Hill/Top")
+camera = NodePath("Player/Camera2D")
 
 [node name="Player" parent="." instance=ExtResource("1_o0w33")]
 position = Vector2(187, 0)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 zoom = Vector2(2, 2)
+script = ExtResource("5_06n1k")
+noise = SubResource("FastNoiseLite_iimy3")
 
 [node name="Boulder" parent="." instance=ExtResource("2_llx8j")]
 position = Vector2(318, 0)

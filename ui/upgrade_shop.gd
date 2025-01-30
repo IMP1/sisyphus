@@ -26,12 +26,12 @@ signal upgrade_chosen(upgrade: StringName)
 
 func _ready() -> void:
 	_close_button.pressed.connect(close_requested.emit)
-	_upgrade_sisyphus_strength.pressed.connect(_increase_stat.bind(&"sisyphus_strength", "Sisyphus/Strength"))
-	_upgrade_sisyphus_speed.pressed.connect(_increase_stat.bind(&"sisyphus_speed", "Sisyphus/Speed"))
-	_upgrade_sisyphus_contentedness.pressed.connect(_increase_stat.bind(&"sisyphus_contentedness", "Sisyphus/Contentedness"))
-	_upgrade_boulder_size.pressed.connect(_increase_stat.bind(&"boulder_size", "Boulder/Size"))
-	_upgrade_hill_height.pressed.connect(_increase_stat.bind(&"hill_height", "Hill/Height"))
-	_upgrade_hill_steepness.pressed.connect(_increase_stat.bind(&"hill_steepness", "Hill/Steepness"))
+	_upgrade_sisyphus_strength.pressed.connect(_increase_stat.bind(&"sisyphus_strength"))
+	_upgrade_sisyphus_speed.pressed.connect(_increase_stat.bind(&"sisyphus_speed"))
+	_upgrade_sisyphus_contentedness.pressed.connect(_increase_stat.bind(&"sisyphus_contentedness"))
+	_upgrade_boulder_size.pressed.connect(_increase_stat.bind(&"boulder_size"))
+	_upgrade_hill_height.pressed.connect(_increase_stat.bind(&"hill_height"))
+	_upgrade_hill_steepness.pressed.connect(_increase_stat.bind(&"hill_steepness"))
 	focus_entered.connect(_upgrade_sisyphus_strength.grab_focus)
 	for i in _upgrade_hat_list.get_child_count():
 		var child := _upgrade_hat_list.get_child(i)
@@ -90,7 +90,7 @@ func refresh() -> void:
 		special.disabled = (progress.upgrade_points == 0 and not special.is_unlocked)
 
 
-func _increase_stat(stat: StringName, path: String) -> void:
+func _increase_stat(stat: StringName) -> void:
 	progress.upgrade_points -= 1
 	progress.set(stat, progress.get(stat) + 1)
 	upgrade_chosen.emit(stat)

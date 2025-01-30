@@ -14,6 +14,7 @@ const PROGRESS_FILENAME := "user://progress.tres"
 @export var pit: Area2D
 @export var pit_top: Area2D
 @export var hilltop: Area2D
+@export var camera: ShakeableCamera2D
 
 var _is_rolling_boulder: bool = false
 var _upgrade_queue: Array = []
@@ -57,6 +58,10 @@ func _ready() -> void:
 	player.stopped_pushing.connect(boulder.push.bind(Vector2.ZERO))
 	player.moved.connect(func(distance: Vector2):
 		progress.distance_walked += distance.length())
+	boulder.started_moving.connect(func():
+		camera.add_screen_rumble(Vector2(0.5, 0.5)))
+	boulder.stopped_moving.connect(func():
+		camera.add_screen_rumble(Vector2(-0.5, -0.5)))
 	_gui_menu_open_btn.pressed.connect(_open_menu)
 	_gui_menu_resume_btn.pressed.connect(_close_menu)
 	_gui_progress_label.pressed.connect(_offer_upgrade)
@@ -68,6 +73,8 @@ func _ready() -> void:
 	_gui_quit_to_title.pressed.connect(_quit_to_title.call_deferred)
 	_gui_quit_to_desktop.pressed.connect(_quit_to_desktop.call_deferred)
 	_gui_quit_cancel.pressed.connect(_gui_quit_confirmation.hide)
+	SettingsManager.settings_changed.connect(func():
+		camera.shake_strength_modifier = SettingsManager.settings.screenshake_strength)
 	_reset_player()
 	_refresh_progress_gui()
 
@@ -75,8 +82,6 @@ func _ready() -> void:
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed(&"DEBUG_increase_attempts"):
 		_increase_attempts()
-	if event.is_action_pressed(&"DEBUG_show_progress"):
-		_DEBUG_show_progress()
 
 
 func _reset_player() -> void:
@@ -137,12 +142,28 @@ func _close_upgrade_shop() -> void:
 	get_tree().paused = false
 	if _upgrade_queue.is_empty():
 		return
-	# TODO: Pause player
+	player.process_mode = Node.PROCESS_MODE_DISABLED
+	camera.process_mode = Node.PROCESS_MODE_ALWAYS
 	for upgrade in _upgrade_queue:
 		print(upgrade)
+		await get_tree().create_timer(0.4).timeout
+		if (upgrade as StringName).begins_with("sisyphus_"):
+			var animation := AnimatedSprite2D.new()
+			add_child(animation)
+			animation.sprite_frames = load("res://assets/player_growth.aseprite")
+			animation.position = player.position + Vector2(2, -15) # TODO: De-magic these numbers (player sprite relative to player position)
+			animation.modulate = Color("eec39a")
+			animation.play(&"spark")
+			# TODO: Play a fanfare or something?
+			camera.add_screen_shake_constant(0.3, Vector2(4, 2))
+			await animation.animation_looped
+			animation.stop()
+			remove_child(animation)
+			animation.queue_free()
 	# TODO: Process queued upgrades and then animate them when closing the shop
 	# TODO: Have updates change the game world
-	# TODO: Unpause player
+	player.process_mode = Node.PROCESS_MODE_INHERIT
+	camera.process_mode = Node.PROCESS_MODE_INHERIT
 
 
 func _open_menu() -> void:
@@ -178,29 +199,7 @@ func _process(delta: float) -> void:
 		boulder.get_node(^"Debug/States/SlowingDown").visible = false
 
 
-func _DEBUG_show_progress() -> void:
-	print("Game Over")
-	print()
-	print("Attempts: %d" % progress.attempts)
-	print("Unspent Upgrade Points: %d" % progress.upgrade_points)
-	print("Time Spent Playing: %d" % progress.time_played_seconds)
-	print("Distance Walked: %d" % progress.distance_walked)
-	print("Suicides: %d" % progress.suicides)
-	print()
-	print("hill_height: %d" % progress.hill_height)
-	print("hill_steepness: %d" % progress.hill_steepness)
-	print("hill_unlocked_extras: %d" % progress.hill_unlocked_extras)
-	print("hill_active_extras: %d" % progress.hill_active_extras)
-	print("sisyphus_speed: %d" % progress.sisyphus_speed)
-	print("sisyphus_strength: %d" % progress.sisyphus_strength)
-	print("sisyphus_contentedness: %d" % progress.sisyphus_contentedness)
-	print("sisyphus_unlocked_hats: %d" % progress.sisyphus_unlocked_hats)
-	print("sisyphus_current_hats: %d" % progress.sisyphus_current_hats)
-	print("boulder_size: %d" % progress.boulder_size)
-
-
 func _game_over() -> void:
-	#_DEBUG_show_progress()
 	var scene := preload("res://scenes/summary.tscn").instantiate() as SummaryScene
 	scene.progress = progress
 	print("Deleting progress from %s" % PROGRESS_FILENAME)
