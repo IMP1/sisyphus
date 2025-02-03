@@ -35,6 +35,8 @@ func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity.y += 10
 	var movement := Input.get_axis(&"move_left", &"move_right")
+	if not is_on_floor():
+		movement /= 3.0
 	if not is_equal_approx(movement, 0.0):
 		velocity.x = movement * SPEEDS[speed]
 	_update_sprite(velocity)
@@ -55,7 +57,7 @@ func _physics_process(delta: float) -> void:
 
 
 func _update_sprite(movement: Vector2) -> void:
-	if movement.y > 0.2:
+	if not is_on_floor(): #movement.y > 0.3 and absf(movement.x) < 0.2:
 		sprite.play(&"Falling")
 	elif not is_equal_approx(movement.x, 0.0):
 		if slope_raycast.is_colliding():

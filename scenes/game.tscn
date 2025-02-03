@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://bmmxp1wfxvkdy"]
+[gd_scene load_steps=33 format=3 uid="uid://bmmxp1wfxvkdy"]
 
 [ext_resource type="PackedScene" uid="uid://hgrs4mee2nt2" path="res://objects/player.tscn" id="1_o0w33"]
 [ext_resource type="Script" path="res://scenes/game.gd" id="1_yacr7"]
@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://bmevumavk6uuc" path="res://assets/ui_progress_bg.png" id="7_j14tc"]
 [ext_resource type="AudioStream" uid="uid://do2q3a77jfurb" path="res://assets/audio/oedipus-at-colonus-part-b-113597.mp3" id="8_88mte"]
 [ext_resource type="Texture2D" uid="uid://bux2jt40bghsg" path="res://assets/ui_progress_fill.png" id="8_m3yg6"]
+[ext_resource type="PackedScene" uid="uid://ce0guea86w76l" path="res://objects/hill.tscn" id="8_ofh1x"]
 [ext_resource type="Theme" uid="uid://b6h2wm00ubtmo" path="res://resources/theme_upgrade_shop.tres" id="9_syl23"]
 [ext_resource type="PackedScene" uid="uid://cepbq2w163120" path="res://ui/upgrade_shop.tscn" id="11_pi8ye"]
 [ext_resource type="AudioStream" uid="uid://bftyaphib8m1b" path="res://assets/audio/wind-artificial-18750.mp3" id="13_cii20"]
@@ -43,12 +44,6 @@ boulder_size = 0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fpfet"]
 size = Vector2(386, 1150)
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_5leby"]
-radius = 58.0
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_0gn06"]
-size = Vector2(30, 170)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_psqnn"]
 size = Vector2(338, 136)
@@ -112,7 +107,7 @@ texture_margin_bottom = 16.0
 axis_stretch_horizontal = 1
 axis_stretch_vertical = 1
 
-[node name="Game" type="Node2D" node_paths=PackedStringArray("player", "player_spawn", "boulder_spawn", "boulder", "pit", "pit_top", "hilltop", "camera")]
+[node name="Game" type="Node2D" node_paths=PackedStringArray("player", "player_spawn", "boulder_spawn", "boulder", "pit", "pit_top", "hill", "camera")]
 script = ExtResource("1_yacr7")
 background_music = SubResource("AudioStreamRandomizer_0kx8y")
 progress = SubResource("Resource_4be2w")
@@ -122,11 +117,12 @@ boulder_spawn = NodePath("BoulderSpawn")
 boulder = NodePath("Boulder")
 pit = NodePath("World/Pit")
 pit_top = NodePath("World/Pit/Top")
-hilltop = NodePath("World/Hill/Top")
+hill = NodePath("World/Hill")
 camera = NodePath("Player/Camera2D")
 
 [node name="Player" parent="." instance=ExtResource("1_o0w33")]
 position = Vector2(187, 0)
+floor_max_angle = 1.0472
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 zoom = Vector2(2, 2)
@@ -148,7 +144,7 @@ shape = SubResource("RectangleShape2D_fpfet")
 
 [node name="Polygon2D" type="Polygon2D" parent="World/Ground"]
 color = Color(0.933333, 0.764706, 0.603922, 1)
-polygon = PackedVector2Array(-4, -6, 382, -6, 382, 1144, -4, 1144)
+polygon = PackedVector2Array(-4, -6, 386, -6, 387, 1144, -4, 1144)
 
 [node name="Polygon2D2" type="Polygon2D" parent="World/Ground"]
 color = Color(0.933333, 0.764706, 0.603922, 1)
@@ -162,33 +158,10 @@ texture = ExtResource("4_vipsa")
 polygon = PackedVector2Array(-2, -3, 189.5, -3, 189.5, 2, -2, 1.66667)
 uv = PackedVector2Array(-4, -11, 381, -11, 380, 1, -4, 2)
 
-[node name="Hill" type="StaticBody2D" parent="World"]
-position = Vector2(57, -433)
-collision_mask = 7
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="World/Hill"]
-polygon = PackedVector2Array(327, 433, 540, 274, 672, 164, 819, 57, 866, 35, 996, 58, 1064, 39, 1297, 142, 1354, 233, 1491, 372, 1771, 481, 1775, 627, 327, 628)
-
-[node name="Polygon2D" type="Polygon2D" parent="World/Hill"]
-color = Color(0.933333, 0.764706, 0.603922, 1)
-polygon = PackedVector2Array(326, 433, 540, 274, 672, 164, 818, 57, 868, 32, 932, 46, 994, 56, 1058, 40, 1297, 142, 1349, 228, 1486, 368, 1771, 482, 1776, 971, 326, 969)
-
-[node name="Top" type="Area2D" parent="World/Hill"]
-position = Vector2(742, 73)
-collision_layer = 0
-collision_mask = 4
-monitorable = false
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Hill/Top"]
-shape = SubResource("CircleShape2D_5leby")
-
-[node name="StaticBody2D" type="StaticBody2D" parent="World/Hill/Top"]
-position = Vector2(47, -36)
-collision_mask = 7
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Hill/Top/StaticBody2D"]
-rotation = -0.523599
-shape = SubResource("RectangleShape2D_0gn06")
+[node name="Hill" parent="World" instance=ExtResource("8_ofh1x")]
+position = Vector2(386, 0)
+distance = 300.0
+steepness = 0.25
 
 [node name="Pit" type="Area2D" parent="World"]
 position = Vector2(-151, 966)

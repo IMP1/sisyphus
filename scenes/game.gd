@@ -13,7 +13,7 @@ const PROGRESS_FILENAME := "user://progress.tres"
 @export var boulder: Boulder
 @export var pit: Area2D
 @export var pit_top: Area2D
-@export var hilltop: Area2D
+@export var hill: Hill
 @export var camera: ShakeableCamera2D
 
 var _is_rolling_boulder: bool = false
@@ -54,14 +54,14 @@ func _ready() -> void:
 	pit.body_entered.connect(_revive_player)
 	pit.body_entered.connect(func(_node): progress.suicides += 1)
 	pit_top.body_entered.connect(_start_player_falling)
-	hilltop.body_entered.connect(_roll_boulder)
+	hill.boulder_reached_top.connect(_roll_boulder)
 	player.stopped_pushing.connect(boulder.push.bind(Vector2.ZERO))
 	player.moved.connect(func(distance: Vector2):
 		progress.distance_walked += distance.length())
-	boulder.started_moving.connect(func():
-		camera.add_screen_rumble(Vector2(0.5, 0.5)))
-	boulder.stopped_moving.connect(func():
-		camera.add_screen_rumble(Vector2(-0.5, -0.5)))
+	#boulder.started_moving.connect(func():
+		#camera.add_screen_rumble(Vector2(0.5, 0.5)))
+	#boulder.stopped_moving.connect(func():
+		#camera.add_screen_rumble(Vector2(-0.5, -0.5)))
 	_gui_menu_open_btn.pressed.connect(_open_menu)
 	_gui_menu_resume_btn.pressed.connect(_close_menu)
 	_gui_progress_label.pressed.connect(_offer_upgrade)
@@ -77,6 +77,7 @@ func _ready() -> void:
 		camera.shake_strength_modifier = SettingsManager.settings.screenshake_strength)
 	_reset_player()
 	_refresh_progress_gui()
+	_reset_hill()
 
 
 func _input(event: InputEvent) -> void:
@@ -87,6 +88,11 @@ func _input(event: InputEvent) -> void:
 func _reset_player() -> void:
 	player.velocity = Vector2.ZERO
 	player.position = player_spawn.position
+
+
+func _reset_hill() -> void:
+	hill.distance = progress.hill_height * 100.0
+	hill.steepness = remap(progress.hill_steepness, 0.0, 10.0, 0.25, 0.7)
 
 
 func _start_player_falling(_player: Player) -> void:
@@ -160,6 +166,12 @@ func _close_upgrade_shop() -> void:
 			animation.stop()
 			remove_child(animation)
 			animation.queue_free()
+		if upgrade == &"hill_height":
+			# TODO: Animate growth?
+			_reset_hill()
+		if upgrade == &"hill_steepness":
+			# TODO: Animate growth?
+			_reset_hill()
 	# TODO: Process queued upgrades and then animate them when closing the shop
 	# TODO: Have updates change the game world
 	player.process_mode = Node.PROCESS_MODE_INHERIT

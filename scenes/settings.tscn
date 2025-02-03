@@ -77,6 +77,21 @@ layout_mode = 2
 size_flags_horizontal = 3
 alignment = 1
 
+[node name="Screenshake" type="HBoxContainer" parent="PanelContainer/VBoxContainer/HBoxContainer/General"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer/General/Screenshake"]
+layout_mode = 2
+size_flags_stretch_ratio = 0.5
+text = "Screenshake"
+
+[node name="HSlider" type="HSlider" parent="PanelContainer/VBoxContainer/HBoxContainer/General/Screenshake"]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 2.0
+step = 0.01
+value = 1.0
+
 [node name="VSeparator2" type="VSeparator" parent="PanelContainer/VBoxContainer/HBoxContainer"]
 visible = false
 layout_mode = 2

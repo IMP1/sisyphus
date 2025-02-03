@@ -1,0 +1,37 @@
+[gd_scene load_steps=4 format=3 uid="uid://ce0guea86w76l"]
+
+[ext_resource type="Script" path="res://objects/hill.gd" id="1_3oh8w"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5leby"]
+radius = 58.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0gn06"]
+size = Vector2(30, 170)
+
+[node name="Hill" type="StaticBody2D"]
+collision_mask = 7
+script = ExtResource("1_3oh8w")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-6, 0, 231, -167, 350, -275, 536, -400, 668, -375, 666, 261, 0, 261)
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+color = Color(0.933333, 0.764706, 0.603922, 1)
+polygon = PackedVector2Array(326, 433, 540, 274, 672, 164, 818, 57, 868, 32, 932, 46, 994, 56, 1058, 40, 1297, 142, 1349, 228, 1486, 368, 1771, 482, 1776, 971, 326, 969)
+
+[node name="Top" type="Area2D" parent="."]
+position = Vector2(413, -334)
+rotation = -0.624828
+collision_layer = 0
+collision_mask = 4
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Top"]
+shape = SubResource("CircleShape2D_5leby")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Top"]
+position = Vector2(60, 0)
+collision_mask = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Top/StaticBody2D"]
+shape = SubResource("RectangleShape2D_0gn06")
