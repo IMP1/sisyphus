@@ -3,6 +3,7 @@ class_name Boulder
 
 signal started_moving
 signal stopped_moving
+signal reset
 
 const PLAYER_PHYSICS_LAYER := 2
 const BOULDER_PHYSICS_LAYER := 3
@@ -17,6 +18,7 @@ var gravity_speed: float = 0
 @onready var _slope_raycast := $SlopeRay as RayCast2D
 @onready var _reset_area := $ResetArea as Area2D
 @onready var _scrape_sound := $ScrapeSound as AudioStreamPlayer2D
+@onready var _particles := $ResetArea/GPUParticles2D as GPUParticles2D
 
 
 func _ready() -> void:
@@ -61,7 +63,7 @@ func _physics_process(delta: float) -> void:
 func _wait_for_reset() -> void:
 	_reset_area.monitoring = true
 	_reset_area.visible = true
-	# TODO: Change graphics somehow
+	_particles.emitting = true
 
 
 func ignore_player_contact() -> void:
@@ -79,4 +81,5 @@ func _player_reset(_player) -> void:
 	_reset_area.set_deferred(&"monitoring", false)
 	_reset_area.visible = false
 	$Polygon2D.color = Color("eec39a")
-	# BUG: Boulder seems to move here?
+	_particles.emitting = false
+	reset.emit()

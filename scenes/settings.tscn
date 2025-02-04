@@ -187,6 +187,7 @@ text = "Move Left"
 [node name="Button" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer/Controls/MoveLeft"]
 layout_mode = 2
 size_flags_horizontal = 3
+disabled = true
 
 [node name="MoveRight" type="HBoxContainer" parent="PanelContainer/VBoxContainer/HBoxContainer/Controls"]
 layout_mode = 2
@@ -201,6 +202,7 @@ text = "Move Right"
 [node name="Button" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer/Controls/MoveRight"]
 layout_mode = 2
 size_flags_horizontal = 3
+disabled = true
 
 [node name="Menu" type="HBoxContainer" parent="PanelContainer/VBoxContainer/HBoxContainer/Controls"]
 layout_mode = 2
@@ -215,6 +217,7 @@ text = "Open Pause Menu"
 [node name="Button" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer/Controls/Menu"]
 layout_mode = 2
 size_flags_horizontal = 3
+disabled = true
 
 [node name="VSeparator4" type="VSeparator" parent="PanelContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2

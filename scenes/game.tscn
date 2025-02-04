@@ -39,11 +39,13 @@ sisyphus_contentedness = 0
 sisyphus_unlocked_hats = 0
 sisyphus_current_hats = 0
 boulder_size = 0
+sisyphus_position = Vector2(0, 0)
+boulder_position = Vector2(0, 0)
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_iimy3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fpfet"]
-size = Vector2(386, 1150)
+size = Vector2(390, 1150)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_psqnn"]
 size = Vector2(338, 136)
@@ -130,7 +132,7 @@ script = ExtResource("5_06n1k")
 noise = SubResource("FastNoiseLite_iimy3")
 
 [node name="Boulder" parent="." instance=ExtResource("2_llx8j")]
-position = Vector2(318, 0)
+position = Vector2(224, 0)
 
 [node name="World" type="Node2D" parent="."]
 
@@ -139,7 +141,7 @@ position = Vector2(4, 6)
 collision_mask = 7
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/Ground"]
-position = Vector2(189, 569)
+position = Vector2(187, 569)
 shape = SubResource("RectangleShape2D_fpfet")
 
 [node name="Polygon2D" type="Polygon2D" parent="World/Ground"]
@@ -160,8 +162,8 @@ uv = PackedVector2Array(-4, -11, 381, -11, 380, 1, -4, 2)
 
 [node name="Hill" parent="World" instance=ExtResource("8_ofh1x")]
 position = Vector2(386, 0)
-distance = 300.0
 steepness = 0.25
+seed = 0
 
 [node name="Pit" type="Area2D" parent="World"]
 position = Vector2(-151, 966)

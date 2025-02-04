@@ -12,6 +12,7 @@ signal boulder_reached_top
 	set(value):
 		steepness = value
 		_refresh()
+@export var seed: int
 
 @onready var _top_area := $Top as Area2D
 
@@ -21,16 +22,22 @@ func _ready() -> void:
 
 
 func _refresh() -> void:
+	var rng := RandomNumberGenerator.new()
+	rng.seed = seed
 	var angle := steepness * PI / 2
 	var base_length := distance / sin(angle)
 	var height := distance / cos(angle)
 	var polygon := PackedVector2Array()
 	polygon.append(Vector2.ZERO)
+	var n := floori(distance / 50) + rng.randi_range(-2, 6)
+	for i in n:
+		var vec := Vector2(base_length, -height) * (i+1) / (n+1)
+		vec += Vector2.from_angle(rng.randf() * TAU) * rng.randf_range(2, 6)
+		polygon.append(vec)
 	polygon.append(Vector2(base_length, -height))
 	polygon.append(Vector2(base_length * 2, 0))
 	polygon.append(Vector2(base_length * 2, 256))
 	polygon.append(Vector2(0, 256))
-	# TODO: Add some slight variation in the slope
 	$CollisionPolygon2D.polygon = polygon
 	$Polygon2D.polygon = polygon
 	$Top.rotation = -angle

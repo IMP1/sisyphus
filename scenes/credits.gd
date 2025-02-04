@@ -40,15 +40,13 @@ func _populate_credits() -> void:
 			title.fit_content = true
 			title.append_text("[center]")
 			title.append_text(entry["link"])
-			title.meta_clicked.connect(func(link: String):
-				pass) # TODO: Handle clicks
+			title.meta_clicked.connect(OS.shell_open)
 			var author := RichTextLabel.new()
 			author.bbcode_enabled = true
 			author.fit_content = true
 			author.append_text("[center]")
 			author.append_text(entry["author"])
-			author.meta_clicked.connect(func(link: String):
-				pass) # TODO: Handle clicks
+			author.meta_clicked.connect(OS.shell_open)
 			_credits_list.add_child(title)
 			_credits_list.add_child(author)
 			var spacing := HSeparator.new()

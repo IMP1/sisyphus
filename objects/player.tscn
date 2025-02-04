@@ -40,7 +40,7 @@ modulate = Color(0.933333, 0.764706, 0.603922, 1)
 texture_filter = 1
 position = Vector2(2, -15)
 sprite_frames = ExtResource("2_jgxjn")
-animation = &"PushUp"
+animation = &"Idle"
 autoplay = "Idle"
 
 [node name="FootstepsSound" type="AudioStreamPlayer2D" parent="."]

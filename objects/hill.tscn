@@ -11,6 +11,7 @@ size = Vector2(30, 170)
 [node name="Hill" type="StaticBody2D"]
 collision_mask = 7
 script = ExtResource("1_3oh8w")
+seed = null
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 polygon = PackedVector2Array(-6, 0, 231, -167, 350, -275, 536, -400, 668, -375, 666, 261, 0, 261)

@@ -17,7 +17,7 @@ const PROGRESS_FILENAME := "user://progress.tres"
 @export var camera: ShakeableCamera2D
 
 var _is_rolling_boulder: bool = false
-var _upgrade_queue: Array = []
+var _upgrade_queue: Array[StringName] = []
 
 @onready var _falling_sound := $FallingSound as AudioStreamPlayer
 @onready var _thump_sound := $PlayerSpawn/ThumpSound as AudioStreamPlayer2D
@@ -42,15 +42,6 @@ func _ready() -> void:
 		MusicManager.blend_to(background_music, 2.0)
 	else:
 		MusicManager.play(background_music)
-	if ResourceLoader.exists(PROGRESS_FILENAME):
-		print("Loading progress from %s" % PROGRESS_FILENAME)
-		progress = ResourceLoader.load(PROGRESS_FILENAME) as GameProgress
-	else:
-		progress = GameProgress.new()
-	_gui_upgrade_shop.visible = false
-	_gui_upgrade_shop.progress = progress
-	_gui_quit_confirmation.hide()
-	_gui_menu.visible = false
 	pit.body_entered.connect(_revive_player)
 	pit.body_entered.connect(func(_node): progress.suicides += 1)
 	pit_top.body_entered.connect(_start_player_falling)
@@ -76,8 +67,19 @@ func _ready() -> void:
 	SettingsManager.settings_changed.connect(func():
 		camera.shake_strength_modifier = SettingsManager.settings.screenshake_strength)
 	_reset_player()
+	if FileAccess.file_exists(PROGRESS_FILENAME):
+		print("Loading progress from %s" % PROGRESS_FILENAME)
+		progress = ResourceLoader.load(PROGRESS_FILENAME) as GameProgress
+		player.position = progress.sisyphus_position
+		boulder.position = progress.boulder_position
+	else:
+		progress = GameProgress.new()
+	_gui_upgrade_shop.visible = false
+	_gui_upgrade_shop.progress = progress
+	_gui_quit_confirmation.hide()
+	_gui_menu.visible = false
 	_refresh_progress_gui()
-	_reset_hill()
+	_refresh_hill()
 
 
 func _input(event: InputEvent) -> void:
@@ -90,9 +92,9 @@ func _reset_player() -> void:
 	player.position = player_spawn.position
 
 
-func _reset_hill() -> void:
-	hill.distance = progress.hill_height * 100.0
-	hill.steepness = remap(progress.hill_steepness, 0.0, 10.0, 0.25, 0.7)
+func _refresh_hill() -> void:
+	hill.distance = (progress.hill_height + 2) * 100.0
+	hill.steepness = remap(progress.hill_steepness, 0.0, 20.0, 0.25, 0.7) # TODO: Have this be non-linear? Asymptotic?
 
 
 func _start_player_falling(_player: Player) -> void:
@@ -106,6 +108,7 @@ func _revive_player(_player: Player) -> void:
 	_player.position = player_spawn.position + Vector2.UP * 96
 	_falling_sound.stop()
 	_thump_sound.play()
+	camera.add_screen_shake_constant(0.4, Vector2.ONE * 4)
 
 
 func _roll_boulder(_boulder: Boulder) -> void:
@@ -115,6 +118,7 @@ func _roll_boulder(_boulder: Boulder) -> void:
 	boulder.ignore_player_contact()
 	await _move_boulder_towards_spawn()
 	boulder._wait_for_reset()
+	await boulder.reset
 	_increase_attempts()
 
 
@@ -122,6 +126,7 @@ func _increase_attempts() -> void:
 	progress.attempts += 1
 	if progress.attempts % int(_gui_progress_bar.max_value) == 0:
 		progress.upgrade_points += 1
+		# TODO: Play a sound
 		_offer_upgrade()
 	_refresh_progress_gui()
 
@@ -151,29 +156,38 @@ func _close_upgrade_shop() -> void:
 	player.process_mode = Node.PROCESS_MODE_DISABLED
 	camera.process_mode = Node.PROCESS_MODE_ALWAYS
 	for upgrade in _upgrade_queue:
-		print(upgrade)
+		print("Upgrade: %s" % upgrade)
 		await get_tree().create_timer(0.4).timeout
-		if (upgrade as StringName).begins_with("sisyphus_"):
+		if upgrade.begins_with("sisyphus_"):
 			var animation := AnimatedSprite2D.new()
 			add_child(animation)
-			animation.sprite_frames = load("res://assets/player_growth.aseprite")
-			animation.position = player.position + Vector2(2, -15) # TODO: De-magic these numbers (player sprite relative to player position)
+			animation.sprite_frames = load("res://assets/player_growth.aseprite") as SpriteFrames
+			animation.position = player.position + player.sprite.position
 			animation.modulate = Color("eec39a")
 			animation.play(&"spark")
-			# TODO: Play a fanfare or something?
+			player.speed = progress.sisyphus_speed
+			player.strenth = progress.sisyphus_strength
+			player.contentedness = progress.sisyphus_contentedness
+			# TODO: Set player hats
+			# TODO: Play a fanfare or something? Different for different stats?
 			camera.add_screen_shake_constant(0.3, Vector2(4, 2))
 			await animation.animation_looped
 			animation.stop()
 			remove_child(animation)
 			animation.queue_free()
 		if upgrade == &"hill_height":
+			hill.distance = progress.hill_height
+			camera.add_screen_shake_constant(0.4, Vector2(2, 1))
 			# TODO: Animate growth?
-			_reset_hill()
+			_refresh_hill()
 		if upgrade == &"hill_steepness":
+			hill.steepness = progress.hill_steepness
+			camera.add_screen_shake_constant(0.4, Vector2(2, 1))
 			# TODO: Animate growth?
-			_reset_hill()
-	# TODO: Process queued upgrades and then animate them when closing the shop
-	# TODO: Have updates change the game world
+			_refresh_hill()
+		if upgrade == &"swap_hat":
+			pass # TODO: Play an animation on the player and swap their hat
+		# TODO: The rest of these
 	player.process_mode = Node.PROCESS_MODE_INHERIT
 	camera.process_mode = Node.PROCESS_MODE_INHERIT
 
@@ -214,8 +228,11 @@ func _process(delta: float) -> void:
 func _game_over() -> void:
 	var scene := preload("res://scenes/summary.tscn").instantiate() as SummaryScene
 	scene.progress = progress
+	progress = GameProgress.new()
 	print("Deleting progress from %s" % PROGRESS_FILENAME)
-	DirAccess.remove_absolute(PROGRESS_FILENAME)
+	var err := DirAccess.remove_absolute(PROGRESS_FILENAME)
+	if err != OK:
+		push_error(error_string(err))
 	get_tree().root.add_child(scene)
 	get_tree().root.remove_child(self)
 
@@ -230,6 +247,8 @@ func _open_settings() -> void:
 
 func _save_progress() -> void:
 	print("Saving progress to %s" % PROGRESS_FILENAME)
+	progress.sisyphus_position = player.position
+	progress.boulder_position = boulder.position
 	ResourceSaver.save(progress, PROGRESS_FILENAME)
 
 
