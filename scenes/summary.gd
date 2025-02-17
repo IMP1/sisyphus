@@ -1,9 +1,17 @@
 extends Control
 class_name SummaryScene
 
+const PROVERBS: Array[String] = [
+	"\"There is scarcely any passion without struggle.\"",
+	"\"What is called a reason for living is also an excellent reason for dying.\"",
+	"\"Existence is illusory and it is eternal.\"",
+	"\"In order to understand the world, one has to turn away from it on occasion.\"",
+]
+
 @export var progress: GameProgress
 
 @onready var _continue_btn := $Panel/Contents/Continue as Button
+@onready var _title := $Panel/Contents/Title as Label
 @onready var _time_played := $Panel/Contents/Stats/General/TimePlayed/Value as Label
 @onready var _distance_travelled := $Panel/Contents/Stats/General/DistanceTravelled/Value as Label
 @onready var _roll_attempts := $Panel/Contents/Stats/General/RollAttempts/Value as Label
@@ -27,10 +35,11 @@ func _ready() -> void:
 
 func _continue() -> void:
 	var scene := load("res://scenes/title.tscn") as PackedScene
-	get_tree().change_scene_to_packed(scene)
+	SceneTransition.change_scene_to_packed(scene)
 
 
 func _populate_stats() -> void:
+	_title.text = PROVERBS.pick_random() as String
 	_time_played.text = "%.2f" % progress.time_played_seconds # TODO: Convert to a readable time
 	_distance_travelled.text = "%.2f" % progress.distance_walked
 	_roll_attempts.text = "%d" % progress.attempts

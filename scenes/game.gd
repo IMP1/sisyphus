@@ -21,6 +21,7 @@ var _upgrade_queue: Array[StringName] = []
 
 @onready var _falling_sound := $FallingSound as AudioStreamPlayer
 @onready var _thump_sound := $PlayerSpawn/ThumpSound as AudioStreamPlayer2D
+@onready var _upgrade_sound := $UpgradeSound as AudioStreamPlayer
 @onready var _gui_container := $GUI as CanvasLayer
 @onready var _gui_progress_label := $GUI/Progress/Panel/Contents/Value as Button
 @onready var _gui_progress_bar := $GUI/Progress/Panel/Contents/ProgressBar as TextureProgressBar
@@ -72,6 +73,8 @@ func _ready() -> void:
 		progress = ResourceLoader.load(PROGRESS_FILENAME) as GameProgress
 		player.position = progress.sisyphus_position
 		boulder.position = progress.boulder_position
+		if progress.is_boulder_awaiting_reset:
+			_roll_boulder.call_deferred(boulder)
 	else:
 		progress = GameProgress.new()
 	_gui_upgrade_shop.visible = false
@@ -83,7 +86,7 @@ func _ready() -> void:
 
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed(&"DEBUG_increase_attempts"):
+	if event.is_action_pressed(&"DEBUG_increase_attempts") and OS.has_feature("debug"):
 		_increase_attempts()
 
 
@@ -112,13 +115,15 @@ func _revive_player(_player: Player) -> void:
 
 
 func _roll_boulder(_boulder: Boulder) -> void:
+	progress.is_boulder_awaiting_reset = true
 	boulder.is_ignoring_player = true
 	boulder.push_direction = Vector2.ZERO
 	await get_tree().physics_frame
 	boulder.ignore_player_contact()
 	await _move_boulder_towards_spawn()
-	boulder._wait_for_reset()
+	boulder._wait_for_reset.call_deferred()
 	await boulder.reset
+	progress.is_boulder_awaiting_reset = false
 	_increase_attempts()
 
 
@@ -168,8 +173,14 @@ func _close_upgrade_shop() -> void:
 			player.speed = progress.sisyphus_speed
 			player.strenth = progress.sisyphus_strength
 			player.contentedness = progress.sisyphus_contentedness
+			if upgrade == &"sisyphus_strength":
+				_upgrade_sound.stream = preload("res://assets/audio/grow-speed.ogg") # TODO: Get a strength upgrade sound
+			if upgrade == &"sisyphus_speed":
+				_upgrade_sound.stream = preload("res://assets/audio/grow-speed.ogg")
+			if upgrade == &"sisyphus_contentedness":
+				_upgrade_sound.stream = preload("res://assets/audio/grow-contentedness.ogg")
+			_upgrade_sound.play()
 			# TODO: Set player hats
-			# TODO: Play a fanfare or something? Different for different stats?
 			camera.add_screen_shake_constant(0.3, Vector2(4, 2))
 			await animation.animation_looped
 			animation.stop()
@@ -233,8 +244,7 @@ func _game_over() -> void:
 	var err := DirAccess.remove_absolute(PROGRESS_FILENAME)
 	if err != OK:
 		push_error(error_string(err))
-	get_tree().root.add_child(scene)
-	get_tree().root.remove_child(self)
+	SceneTransition.change_scene_to_node(scene)
 
 
 func _open_settings() -> void:
@@ -263,11 +273,13 @@ func _quit() -> void:
 
 
 func _quit_to_title() -> void:
+	_gui_quit_confirmation.hide()
 	_save_progress()
 	var scene := load("res://scenes/title.tscn") as PackedScene
-	get_tree().change_scene_to_packed(scene)
+	SceneTransition.change_scene_to_packed(scene)
 
 
 func _quit_to_desktop() -> void:
+	_gui_quit_confirmation.hide()
 	get_tree().root.propagate_notification(NOTIFICATION_WM_CLOSE_REQUEST)
 	get_tree().quit()

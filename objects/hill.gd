@@ -12,7 +12,10 @@ signal boulder_reached_top
 	set(value):
 		steepness = value
 		_refresh()
-@export var seed: int
+@export var random_seed: int:
+	set(value):
+		random_seed = value
+		_refresh()
 
 @onready var _top_area := $Top as Area2D
 
@@ -23,7 +26,7 @@ func _ready() -> void:
 
 func _refresh() -> void:
 	var rng := RandomNumberGenerator.new()
-	rng.seed = seed
+	rng.seed = random_seed
 	var angle := steepness * PI / 2
 	var base_length := distance / sin(angle)
 	var height := distance / cos(angle)
@@ -42,3 +45,4 @@ func _refresh() -> void:
 	$Polygon2D.polygon = polygon
 	$Top.rotation = -angle
 	$Top.position = Vector2(base_length, -height) * 0.9
+	$Surface.points = polygon

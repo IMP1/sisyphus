@@ -36,3 +36,5 @@ const HILL_EXTRA_TEXTURES: Array[Texture2D] = [
 
 @export var sisyphus_position: Vector2
 @export var boulder_position: Vector2
+
+@export var is_boulder_awaiting_reset: bool = false

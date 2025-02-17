@@ -1,10 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://2feb5o7cxvsj"]
+[gd_scene load_steps=8 format=3 uid="uid://2feb5o7cxvsj"]
 
 [ext_resource type="Theme" uid="uid://b6h2wm00ubtmo" path="res://resources/theme_upgrade_shop.tres" id="1_26w8y"]
 [ext_resource type="StyleBox" uid="uid://dlg6i1mgpiwsh" path="res://resources/ui_panel.tres" id="1_bxnmm"]
 [ext_resource type="Script" path="res://scenes/title.gd" id="2_capq5"]
 [ext_resource type="AudioStream" uid="uid://knehff4nncbk" path="res://assets/audio/thesatyrsdance-167125.mp3" id="3_1cy6x"]
 [ext_resource type="Texture2D" uid="uid://do81rae651cjf" path="res://assets/title.png" id="3_m0c33"]
+[ext_resource type="AudioStream" uid="uid://evlulwoweyut" path="res://assets/audio/ui_focus.ogg" id="6_333ug"]
+[ext_resource type="AudioStream" uid="uid://d08w4iss3vyax" path="res://assets/audio/ui_selection.ogg" id="7_autul"]
 
 [node name="Title" type="Control"]
 process_mode = 3
@@ -86,3 +88,9 @@ stretch_mode = 3
 layout_mode = 2
 text = "A game by Huw Taylor"
 horizontal_alignment = 1
+
+[node name="UIFocus" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_333ug")
+
+[node name="UISelect" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_autul")

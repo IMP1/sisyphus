@@ -40,6 +40,7 @@ func _populate_credits() -> void:
 			title.fit_content = true
 			title.append_text("[center]")
 			title.append_text(entry["link"])
+			title.add_theme_font_size_override(&"normal_font_size", 22)
 			title.meta_clicked.connect(OS.shell_open)
 			var author := RichTextLabel.new()
 			author.bbcode_enabled = true

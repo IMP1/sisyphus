@@ -59,6 +59,7 @@ process_material = SubResource("ParticleProcessMaterial_f25kd")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ResetArea"]
 shape = SubResource("RectangleShape2D_onprg")
+debug_color = Color(0.65427, 0.517664, 7.70092e-07, 0.42)
 
 [node name="ScrapeSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("2_u5vup")
@@ -121,3 +122,16 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.133333, 0.12549, 0.203922, 1)
 theme_override_fonts/font = ExtResource("2_fjf5w")
 text = "Slowing Down"
+
+[node name="Pitch" type="Label" parent="Debug/States"]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.133333, 0.12549, 0.203922, 1)
+theme_override_fonts/font = ExtResource("2_fjf5w")
+text = "1.0"
+
+[node name="Speed" type="Label" parent="Debug/States"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.133333, 0.12549, 0.203922, 1)
+theme_override_fonts/font = ExtResource("2_fjf5w")
+text = "1.0"

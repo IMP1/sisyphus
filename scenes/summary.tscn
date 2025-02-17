@@ -29,7 +29,7 @@ theme_override_styles/panel = ExtResource("3_r3wca")
 [node name="Contents" type="VBoxContainer" parent="Panel"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Panel/Contents"]
+[node name="Title" type="Label" parent="Panel/Contents"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "\"One always finds one's burden again...\""

@@ -42,6 +42,10 @@ Sound Effects: [Thump](https://pixabay.com/sound-effects/box-crash-106687/)
 By animationIsaac  
 [Pixabay License](https://pixabay.com/service/license-summary/)  
 
+Sound Effects: [UI Sounds](https://cyrex-studios.itch.io/universal-ui-soundpack)  
+By [Cyrex Studios](https://cyrex-studios.itch.io/)  
+[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
+
 Music: [Gameplay Theme](https://pixabay.com/music/main-title-oedipus-at-colonus-part-b-113597/)  
 By [TheFealdoProject](https://pixabay.com/users/thefealdoproject-4574887/)  
 [Pixabay License](https://pixabay.com/service/license-summary/)  

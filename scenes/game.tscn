@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://bmmxp1wfxvkdy"]
+[gd_scene load_steps=36 format=3 uid="uid://bmmxp1wfxvkdy"]
 
 [ext_resource type="PackedScene" uid="uid://hgrs4mee2nt2" path="res://objects/player.tscn" id="1_o0w33"]
 [ext_resource type="Script" path="res://scenes/game.gd" id="1_yacr7"]
@@ -17,6 +17,9 @@
 [ext_resource type="Theme" uid="uid://b6h2wm00ubtmo" path="res://resources/theme_upgrade_shop.tres" id="9_syl23"]
 [ext_resource type="PackedScene" uid="uid://cepbq2w163120" path="res://ui/upgrade_shop.tscn" id="11_pi8ye"]
 [ext_resource type="AudioStream" uid="uid://bftyaphib8m1b" path="res://assets/audio/wind-artificial-18750.mp3" id="13_cii20"]
+[ext_resource type="Texture2D" uid="uid://cyightlsjlyed" path="res://assets/icons/inputs/A_Key_Dark.png" id="18_vbe14"]
+[ext_resource type="Script" path="res://scenes/game_tutorials.gd" id="18_xyewc"]
+[ext_resource type="Texture2D" uid="uid://b151sntfdsnl" path="res://assets/icons/inputs/D_Key_Dark.png" id="19_oa5vf"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_0kx8y"]
 streams_count = 1
@@ -41,6 +44,7 @@ sisyphus_current_hats = 0
 boulder_size = 0
 sisyphus_position = Vector2(0, 0)
 boulder_position = Vector2(0, 0)
+is_boulder_awaiting_reset = false
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_iimy3"]
 
@@ -163,7 +167,6 @@ uv = PackedVector2Array(-4, -11, 381, -11, 380, 1, -4, 2)
 [node name="Hill" parent="World" instance=ExtResource("8_ofh1x")]
 position = Vector2(386, 0)
 steepness = 0.25
-seed = 0
 
 [node name="Pit" type="Area2D" parent="World"]
 position = Vector2(-151, 966)
@@ -196,6 +199,8 @@ position = Vector2(224, 0)
 [node name="FallingSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("13_cii20")
 bus = &"DiegeticSounds"
+
+[node name="UpgradeSound" type="AudioStreamPlayer" parent="."]
 
 [node name="GUI" type="CanvasLayer" parent="."]
 
@@ -346,8 +351,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 4.0
 offset_top = 4.0
-offset_right = 188.0
-offset_bottom = 124.0
+offset_right = -4.0
+offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_th8hi")
@@ -372,3 +377,41 @@ text = "Quit to Desktop"
 layout_mode = 2
 theme_override_font_sizes/font_size = 16
 text = "Cancel"
+
+[node name="Tutorials" type="Node2D" parent="."]
+script = ExtResource("18_xyewc")
+
+[node name="Movement" type="Node2D" parent="Tutorials"]
+
+[node name="Label" type="Label" parent="Tutorials/Movement"]
+offset_left = 170.0
+offset_top = 19.0
+offset_right = 210.0
+offset_bottom = 42.0
+theme = ExtResource("9_syl23")
+text = "Move"
+
+[node name="Left" type="Sprite2D" parent="Tutorials/Movement"]
+position = Vector2(164, 55)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("18_vbe14")
+
+[node name="Right" type="Sprite2D" parent="Tutorials/Movement"]
+position = Vector2(208, 56)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("19_oa5vf")
+
+[node name="BackToStart" type="Node2D" parent="Tutorials"]
+
+[node name="Label" type="Label" parent="Tutorials/BackToStart"]
+offset_left = 431.0
+offset_top = 13.0
+offset_right = 698.0
+offset_bottom = 36.0
+rotation = -0.349066
+theme = ExtResource("9_syl23")
+text = "\"One always finds one's burden again...\""
+
+[node name="Polygon2D" type="Polygon2D" parent="Tutorials/BackToStart"]
+color = Color(0.133333, 0.12549, 0.203922, 1)
+polygon = PackedVector2Array(643, -31, 545, 13, 536, -2, 521, 34, 558, 36, 551, 22, 646, -20)

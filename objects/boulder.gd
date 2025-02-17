@@ -52,12 +52,18 @@ func _physics_process(delta: float) -> void:
 		gravity_speed = 0
 	velocity.y += gravity_speed
 	move_and_slide()
+	$Debug/States/Speed.text = "%.2f" % velocity.length()
 	if velocity == Vector2.ZERO and _scrape_sound.playing:
 		_scrape_sound.stop()
 		stopped_moving.emit()
 	elif velocity != Vector2.ZERO and not _scrape_sound.playing:
 		_scrape_sound.play()
 		started_moving.emit()
+	$Debug/States/Pitch.visible = _scrape_sound.playing
+	if _scrape_sound.playing:
+		var pitch := remap(velocity.length(), 0, 80, 0.8, 1.2)
+		_scrape_sound.pitch_scale = pitch
+		$Debug/States/Pitch.text = "%.2f" % pitch
 
 
 func _wait_for_reset() -> void:
