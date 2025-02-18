@@ -54,10 +54,10 @@ Music: [Title Theme](https://pixabay.com/music/modern-classical-thesatyrsdance-1
 By [SamuelFJohanns](https://pixabay.com/users/samuelfjohanns-1207793/)  
 [Pixabay License](https://pixabay.com/service/license-summary/)  
 
-Tools: [Aseprite Wizard](https://godotengine.org/asset-library/asset/713)  
+Tools: [Godot Addon - Aseprite Wizard](https://godotengine.org/asset-library/asset/713)  
 By [viniciusgerevini](https://godotengine.org/asset-library/asset?user=viniciusgerevini)  
 [MIT](https://opensource.org/license/mit)  
 
-Tools: [Controller Icons](https://github.com/rsubtil/controller_icons/)  
+Tools: [Godot Addon - Controller Icons](https://github.com/rsubtil/controller_icons/)  
 By [rsubtil](https://godotengine.org/asset-library/asset?user=rsubtil)  
 [MIT](https://opensource.org/license/mit)  

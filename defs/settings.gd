@@ -17,3 +17,5 @@ const LANGUAGES: Array = [
 @export_range(0.0, 2.0) var screenshake_strength: float = 1.0
 
 # TODO: Keybinds
+
+@export var show_tutorials: bool = true

@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://scenes/credits.gd" id="1_l2d7g"]
 [ext_resource type="StyleBox" uid="uid://dlg6i1mgpiwsh" path="res://resources/ui_panel.tres" id="1_yvgvc"]
 [ext_resource type="Texture2D" uid="uid://do81rae651cjf" path="res://assets/title.png" id="4_gfqqm"]
-[ext_resource type="Texture2D" uid="uid://brllatcs3wfee" path="res://icon.svg" id="4_o7wow"]
+[ext_resource type="Texture2D" uid="uid://cfvaqxnw7y6p4" path="res://assets/godot_logo.png" id="4_xbwep"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qvdbk"]
 draw_center = false
@@ -101,19 +101,22 @@ layout_mode = 2
 theme_override_constants/separation = 48
 theme_override_styles/separator = SubResource("StyleBoxEmpty_en2od")
 
-[node name="Godot" type="TextureRect" parent="Panel/Main/Credits/List"]
-layout_mode = 2
-texture = ExtResource("4_o7wow")
-stretch_mode = 3
-
 [node name="Label" type="Label" parent="Panel/Main/Credits/List"]
 layout_mode = 2
-text = "Made with Godot"
+text = "Made using"
 horizontal_alignment = 1
+
+[node name="Godot" type="TextureRect" parent="Panel/Main/Credits/List"]
+modulate = Color(0.133333, 0.12549, 0.203922, 1)
+custom_minimum_size = Vector2(0, 96)
+layout_mode = 2
+texture = ExtResource("4_xbwep")
+expand_mode = 3
+stretch_mode = 5
 
 [node name="Padding4" type="HSeparator" parent="Panel/Main/Credits/List"]
 layout_mode = 2
-theme_override_constants/separation = 96
+theme_override_constants/separation = 128
 theme_override_styles/separator = SubResource("StyleBoxEmpty_en2od")
 
 [node name="TextureRect" type="TextureRect" parent="Panel/Main/Credits/List"]
