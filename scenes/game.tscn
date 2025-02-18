@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://bmmxp1wfxvkdy"]
+[gd_scene load_steps=39 format=3 uid="uid://bmmxp1wfxvkdy"]
 
 [ext_resource type="PackedScene" uid="uid://hgrs4mee2nt2" path="res://objects/player.tscn" id="1_o0w33"]
 [ext_resource type="Script" path="res://scenes/game.gd" id="1_yacr7"]
@@ -17,9 +17,8 @@
 [ext_resource type="Theme" uid="uid://b6h2wm00ubtmo" path="res://resources/theme_upgrade_shop.tres" id="9_syl23"]
 [ext_resource type="PackedScene" uid="uid://cepbq2w163120" path="res://ui/upgrade_shop.tscn" id="11_pi8ye"]
 [ext_resource type="AudioStream" uid="uid://bftyaphib8m1b" path="res://assets/audio/wind-artificial-18750.mp3" id="13_cii20"]
-[ext_resource type="Texture2D" uid="uid://cyightlsjlyed" path="res://assets/icons/inputs/A_Key_Dark.png" id="18_vbe14"]
 [ext_resource type="Script" path="res://scenes/game_tutorials.gd" id="18_xyewc"]
-[ext_resource type="Texture2D" uid="uid://b151sntfdsnl" path="res://assets/icons/inputs/D_Key_Dark.png" id="19_oa5vf"]
+[ext_resource type="Script" path="res://addons/controller_icons/objects/ControllerIconTexture.gd" id="19_6aibs"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_0kx8y"]
 streams_count = 1
@@ -112,6 +111,46 @@ texture_margin_right = 16.0
 texture_margin_bottom = 16.0
 axis_stretch_horizontal = 1
 axis_stretch_vertical = 1
+
+[sub_resource type="Texture2D" id="Texture2D_ctmhk"]
+resource_local_to_scene = false
+resource_name = ""
+script = ExtResource("19_6aibs")
+path = "move_left"
+show_mode = 0
+force_type = 0
+show_directional_flairs = 1
+show_device_id = false
+
+[sub_resource type="Texture2D" id="Texture2D_anwpg"]
+resource_local_to_scene = false
+resource_name = ""
+script = ExtResource("19_6aibs")
+path = "move_right"
+show_mode = 1
+force_type = 0
+show_directional_flairs = 0
+show_device_id = false
+
+[sub_resource type="Texture2D" id="Texture2D_4spes"]
+resource_local_to_scene = false
+resource_name = ""
+script = ExtResource("19_6aibs")
+path = "move_right"
+show_mode = 1
+force_type = 0
+show_directional_flairs = 1
+show_device_id = false
+
+[sub_resource type="Texture2D" id="Texture2D_h5qjv"]
+resource_local_to_scene = false
+resource_name = ""
+script = ExtResource("19_6aibs")
+path = "move_right"
+show_mode = 0
+force_type = 0
+show_directional_flairs = 2
+show_device_id = false
 
 [node name="Game" type="Node2D" node_paths=PackedStringArray("player", "player_spawn", "boulder_spawn", "boulder", "pit", "pit_top", "hill", "camera")]
 script = ExtResource("1_yacr7")
@@ -351,8 +390,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 4.0
 offset_top = 4.0
-offset_right = -4.0
-offset_bottom = -4.0
+offset_right = 188.0
+offset_bottom = 124.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_th8hi")
@@ -389,17 +428,40 @@ offset_top = 19.0
 offset_right = 210.0
 offset_bottom = 42.0
 theme = ExtResource("9_syl23")
-text = "Move"
+text = "Walk"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Tutorials/Movement"]
+custom_minimum_size = Vector2(0, 32)
+offset_left = 109.0
+offset_top = 42.0
+offset_right = 265.0
+offset_bottom = 74.0
+alignment = 1
+
+[node name="Left" type="TextureRect" parent="Tutorials/Movement/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("Texture2D_ctmhk")
+expand_mode = 1
+
+[node name="Right" type="TextureRect" parent="Tutorials/Movement/HBoxContainer"]
+layout_mode = 2
+texture = SubResource("Texture2D_anwpg")
+expand_mode = 3
 
 [node name="Left" type="Sprite2D" parent="Tutorials/Movement"]
+visible = false
 position = Vector2(164, 55)
 scale = Vector2(0.4, 0.4)
-texture = ExtResource("18_vbe14")
+texture = SubResource("Texture2D_4spes")
 
 [node name="Right" type="Sprite2D" parent="Tutorials/Movement"]
+visible = false
 position = Vector2(208, 56)
 scale = Vector2(0.4, 0.4)
-texture = ExtResource("19_oa5vf")
+texture = SubResource("Texture2D_h5qjv")
 
 [node name="BackToStart" type="Node2D" parent="Tutorials"]
 

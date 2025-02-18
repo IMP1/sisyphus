@@ -23,10 +23,11 @@ config/icon="res://icon.svg"
 SettingsManager="*res://globals/settings_manager.tscn"
 MusicManager="*res://globals/music_manager.tscn"
 SceneTransition="*res://globals/scene_transition.tscn"
+ControllerIcons="*res://addons/controller_icons/ControllerIcons.gd"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/AsepriteWizard/plugin.cfg")
+enabled=PackedStringArray("res://addons/AsepriteWizard/plugin.cfg", "res://addons/controller_icons/plugin.cfg")
 
 [file_customization]
 
