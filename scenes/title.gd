@@ -33,6 +33,7 @@ func _ready() -> void:
 	_settings_btn.pressed.connect(_settings)
 	_credits_btn.pressed.connect(_credits)
 	_quit_btn.pressed.connect(_quit_to_desktop)
+	SceneTransition.transition_completed.connect(_play_btn.grab_focus)
 
 
 func _input(event: InputEvent) -> void:
