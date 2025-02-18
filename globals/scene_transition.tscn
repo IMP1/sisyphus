@@ -1,0 +1,44 @@
+[gd_scene load_steps=2 format=3 uid="uid://c78gsm8ulsxjl"]
+
+[ext_resource type="Script" path="res://globals/scene_transition.gd" id="1_2tqdv"]
+
+[node name="SceneTransition" type="CanvasLayer" node_paths=PackedStringArray("fade", "previous_scene_container", "next_scene_container", "previous_scene_texture", "next_scene_texture")]
+layer = 20
+script = ExtResource("1_2tqdv")
+fade = NodePath("Fade")
+previous_scene_container = NodePath("PreviousScene/SubViewport")
+next_scene_container = NodePath("NextScene/SubViewport")
+previous_scene_texture = NodePath("PreviousScene")
+next_scene_texture = NodePath("NextScene")
+
+[node name="PreviousScene" type="SubViewportContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewport" type="SubViewport" parent="PreviousScene"]
+handle_input_locally = false
+size = Vector2i(1152, 648)
+render_target_update_mode = 4
+
+[node name="NextScene" type="SubViewportContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewport" type="SubViewport" parent="NextScene"]
+handle_input_locally = false
+size = Vector2i(1152, 648)
+render_target_update_mode = 4
+
+[node name="Fade" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0)
